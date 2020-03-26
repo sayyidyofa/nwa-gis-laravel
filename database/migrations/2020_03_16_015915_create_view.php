@@ -1,7 +1,5 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
 class CreateView extends Migration
@@ -14,7 +12,7 @@ class CreateView extends Migration
     public function up()
     {
         DB::statement($this->dropView());
-        DB::statement($this->createView());
+        DB::statement($this->buatView());
         Log::notice("Please import dataset for geometries and wildernesses table into the database manually");
     }
 
@@ -28,7 +26,7 @@ class CreateView extends Migration
         DB::statement($this->dropView());
     }
 
-    private function createView() {
+    private function buatView() {
         return <<<SQL
 create view `gis_view` as
 select wildernesses_id as id, name, boundary_status,  geotype, coordinates
