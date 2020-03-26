@@ -7,7 +7,8 @@
 ### Development
 - Set up `.env` file:
     - `php artisan key:generate`
-    - Database(MySQL) schema name: `nwagis`
+    - Set Database(MySQL) username, password 
+    - Set Database(MySQL) schema name: `nwagis`
 - Set up schema `nwagis` in your MySQL database
 - `composer install`
 - `php artisan migrate`
