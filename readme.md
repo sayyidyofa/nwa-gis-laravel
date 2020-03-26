@@ -5,7 +5,10 @@
 2. CartoDB Site: [CartoDB](https://sayyidyofa.carto.com/builder/85da0184-1639-4f01-9f17-b268bac6da20/embed)
 
 ### Development
-- Set up `.env` file (database, key, etc). This project uses MySQL with default schema name `nwagis`
+- Set up `.env` file:
+    - `php artisan key:generate`
+    - Database(MySQL) schema name: `nwagis`
+- Set up schema `nwagis` in your MySQL database
 - `composer install`
 - `php artisan migrate`
 - Run MySQL inserts in `nwagis_geometries.sql` and `nwagis_wildernesses.sql` file
