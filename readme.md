@@ -12,7 +12,9 @@
 - Set up schema `nwagis` in your MySQL database
 - `composer install`
 - `php artisan migrate`
-- Run MySQL inserts in `nwagis_geometries.sql` and `nwagis_wildernesses.sql` file
+- Run MySQL inserts in this order:
+    1. `nwagis_wildernesses.sql`
+    2. `nwagis_geometries.sql`
 - Good to go.
 
 ### To-Do
