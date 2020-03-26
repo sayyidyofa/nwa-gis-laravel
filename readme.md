@@ -16,3 +16,4 @@ CartoDB Site: [CartoDB](https://sayyidyofa.carto.com/builder/85da0184-1639-4f01-
 - Show a sidebar that views a list of each Wilderness metadata
 - Build a CRUD dashboard
 - Move this To-Do list somewhere else (issues?)
+- Small info widgets on homepage
