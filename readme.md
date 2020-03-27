@@ -23,3 +23,6 @@
 - Build a CRUD dashboard
 - Move this To-Do list somewhere else (issues?)
 - Small info widgets on homepage
+
+### References
+- LeafletJS [docs](https://leafletjs.com/reference-1.6.0.html)
