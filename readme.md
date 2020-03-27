@@ -3,6 +3,7 @@
 ### Reference
 1. Dataset: [ArcGIS](https://hub.arcgis.com/datasets/usfs::national-wilderness-areas)
 2. CartoDB Site: [CartoDB](https://sayyidyofa.carto.com/builder/85da0184-1639-4f01-9f17-b268bac6da20/embed)
+3. LeafletJS [docs](https://leafletjs.com/reference-1.6.0.html)
 
 ### Development
 - Set up `.env` file:
@@ -23,6 +24,3 @@
 - Build a CRUD dashboard
 - Move this To-Do list somewhere else (issues?)
 - Small info widgets on homepage
-
-### References
-- LeafletJS [docs](https://leafletjs.com/reference-1.6.0.html)
