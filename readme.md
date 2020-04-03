@@ -6,12 +6,12 @@
 3. LeafletJS [docs](https://leafletjs.com/reference-1.6.0.html)
 
 ### Development
+- `composer install`
 - Set up `.env` file:
     - `php artisan key:generate`
     - Set Database(MySQL) username, password 
     - Set Database(MySQL) schema name: `nwagis`
 - Set up schema `nwagis` in your MySQL database
-- `composer install`
 - `php artisan migrate`
 - Run MySQL inserts in this order:
     1. `nwagis_wildernesses.sql`
