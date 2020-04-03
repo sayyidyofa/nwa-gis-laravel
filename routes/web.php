@@ -40,7 +40,8 @@ Route::namespace('Admin')->group(function () {
 Route::namespace('Resource')->group(function () {
     Route::resources([
         'geometry' => 'GeometryController',
-        'wilderness' => 'WildernessController'
+        'wilderness' => 'WildernessController',
+        'gis' => 'GISController'
     ]);
     Route::get('/geometry/{id}/coordinates', 'GeometryController@showCoords');
 });

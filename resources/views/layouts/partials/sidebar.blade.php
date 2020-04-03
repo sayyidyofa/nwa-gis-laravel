@@ -27,4 +27,8 @@
         <i class="map icon"></i>
         Map
     </a>
+    <a href="{{ route('gis.create') }}" class="item">
+        <i class="plus icon"></i>
+        New GIS Entry
+    </a>
 </div>

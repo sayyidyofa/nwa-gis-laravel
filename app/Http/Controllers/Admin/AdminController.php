@@ -16,6 +16,7 @@ class AdminController extends Controller
 
     public function dashboardPage() {
         $geodata = GIS::paginate(5);
-        return view('content.dashboard.gis.index', compact('geodata'));
+        $count = GIS::all()->count();
+        return view('content.dashboard.gis.index', compact('geodata', 'count'));
     }
 }

@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Resource;
 use App\Http\Controllers\Controller;
 use App\Wilderness;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Redirect;
 
 class WildernessController extends Controller
 {
@@ -50,11 +52,12 @@ class WildernessController extends Controller
             $wilderness->name = $request->name;
             $wilderness->boundary_status = $request->boundary_status;
             $wilderness->save();
-            return json_encode(array('status' => 'success'));
+            //return json_encode(array('status' => 'success'));
         }
         catch (\Exception $exception) {
-            return json_encode(array('status' => 'failed'));
+            dd($exception);
         }
+        return Redirect::to('/admin');
     }
 
     /**
@@ -71,34 +74,43 @@ class WildernessController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Wilderness  $wilderness
-     * @return \Illuminate\Http\Response
+     * @param int $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function edit(Wilderness $wilderness)
+    public function edit(int $id)
     {
-        //
+        $w = Wilderness::findOrFail($id);
+        return view('content.dashboard.wilderness.edit', compact('w'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Wilderness  $wilderness
-     * @return \Illuminate\Http\Response
+     * @param Wilderness $wilderness
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Request $request, Wilderness $wilderness)
+    public function update(Wilderness $wilderness)
     {
-        //
+        /*$w = Wilderness::findOrFail($id);
+        $w->name = Input::get('name');
+        $w->boundary_status = Input::get('boundary_status');*/
+        $wilderness->save();
+        return Redirect::to('/admin');
     }
 
     /**
      * Remove the specified resource from storage.
      *
      * @param  \App\Wilderness  $wilderness
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy(Wilderness $wilderness)
     {
-        //
+        try {
+            $wilderness->delete();
+        } catch (\Exception $e) {
+            dd($e);
+        }
+        return Redirect::to('/admin');
     }
 }

@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Resource;
 
 
 use App\Http\Controllers\Controller;
@@ -13,8 +13,6 @@ class GISController extends Controller
     {
         $this->middleware('auth');
     }
-
-
 
     public function index()
     {
