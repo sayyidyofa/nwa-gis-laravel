@@ -26,13 +26,27 @@ Route::namespace('Auth')->group(function () {
     Route::get('/logout', 'LoginController@logout')->name('logout');
 });
 
+// Dashboard
+Route::namespace('Admin')->group(function () {
+    Route::prefix('admin')->group(function () {
+        Route::name('admin.')->group(function () {
+            Route::get('/', 'AdminController@dashboardPage')->name('home');
+            Route::get('map', 'AdminController@mapPage')->name('map');
+        });
+    });
+});
+
 // Models
 Route::namespace('Resource')->group(function () {
     Route::resources([
         'geometry' => 'GeometryController',
         'wilderness' => 'WildernessController'
     ]);
+    Route::get('/geometry/{id}/coordinates', 'GeometryController@showCoords');
 });
+
+// Custom Resource routes
+
 
 
 

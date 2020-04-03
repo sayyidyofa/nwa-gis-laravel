@@ -70,6 +70,10 @@ class GeometryController extends Controller
         //
     }
 
+    public function showCoords(int $id) {
+        return Geometry::findOrFail($id)->coordinates;
+    }
+
     /**
      * Show the form for editing the specified resource.
      *

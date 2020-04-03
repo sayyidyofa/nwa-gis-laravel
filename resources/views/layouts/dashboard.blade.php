@@ -25,14 +25,35 @@
 </head>
 <body>
 
-@yield('content')
+@include('layouts.partials.navbar')
+@include('layouts.partials.sidebar')
+<div style="margin-left: 140px; margin-top: 60px">
+    @yield('content')
+</div>
 
 <!-- Scripts -->
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fomantic-ui@2.8.4/dist/semantic.min.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script src="{{ asset('js/wkx.min.js') }}"></script>
 @yield('plugin_js')
 <script src="{{ asset('js/main.js') }}" defer></script>
+<script>
+    $('.delete-confirm').on('click', function (e) {
+        e.preventDefault();
+        const url = $(this).attr('href');
+        swal({
+            title: 'Are you sure?',
+            text: 'This record and it`s details will be permanantly deleted!',
+            icon: 'warning',
+            buttons: ["Cancel", "Yes!"],
+        }).then(function(value) {
+            if (value) {
+                window.location.href = url;
+            }
+        });
+    });
+</script>
 @yield('inline_js')
 </body>
 </html>

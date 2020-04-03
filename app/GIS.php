@@ -10,4 +10,5 @@ class GIS extends Model
 {
     protected $table = 'gis_view';
     public $timestamps = false;
+
 }
