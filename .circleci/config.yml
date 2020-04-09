@@ -90,4 +90,4 @@ jobs:
       - deploy:
           command: |
             rsync -azvW --delete --exclude-from 'exclude-list.txt' ~/project/ ${username}@${server}:${deploy_path}
-            chmod +x deploy.sh && ./deploy.sh
+            chmod +x ~/project/.circleci/deploy.sh && sh ~/project/.circleci/deploy.sh
