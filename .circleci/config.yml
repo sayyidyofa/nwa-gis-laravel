@@ -1,0 +1,87 @@
+# PHP CircleCI 2.0 configuration file
+#
+# Check https://circleci.com/docs/2.0/language-php/ for more details
+#
+version: 2
+jobs:
+  build:
+    docker:
+      # Specify the version you desire here
+      - image: circleci/php:7.1-node-browsers
+
+      # Specify service dependencies here if necessary
+      # CircleCI maintains a library of pre-built images
+      # documented at https://circleci.com/docs/2.0/circleci-images/
+      # Using the RAM variation mitigates I/O contention
+      # for database intensive operations.
+      # - image: circleci/mysql:5.7-ram
+      #
+      # - image: redis:2.8.19
+    branches:
+      only:
+        - master
+    steps:
+      - checkout
+      - add_ssh_keys:
+          fingerprints:
+            - ${fingerprint}
+
+      - run: sudo apt update # PHP CircleCI 2.0 Configuration File# PHP CircleCI 2.0 Configuration File sudo apt install zlib1g-dev libsqlite3-dev
+      - run: sudo apt-get install rsync
+
+      # Download and cache dependencies
+      - run: sudo composer self-update
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "composer.lock" }}
+            # fallback to using the latest cache if no exact match is found
+            - v1-dependencies-
+
+      - run: composer install -n --prefer-dist
+      - save_cache:
+          key: v1-dependencies-{{ checksum "composer.lock" }}
+          paths:
+            - /vendor
+
+      # Adding Host key to know_hosts file
+      - run:
+          name: 'Adding Host key to know_hosts file'
+          command: ssh-keyscan -t rsa ${server} >> ~/.ssh/known_hosts
+
+      # Create the env file
+      - run:
+          name: 'Create env file'
+          command: |
+            echo -e 'APP_NAME="NWA-GIS"' > .env
+            echo -e 'APP_ENV=production' >> .env
+            echo -e 'APP_KEY='${APP_KEY} >> .env
+            echo -e 'APP_DEBUG=false' >> .env
+            echo -e 'LOG_CHANNEL="daily"' >> .env
+            echo -e 'DB_CONNECTION="mysql"' >> .env
+            echo -e 'DB_HOST="localhost"' >> .env
+            echo -e 'DB_PORT="'${DB_PORT}'"' >> .env
+            echo -e 'DB_DATABASE="'${DB_DATABASE}'"' >> .env
+            echo -e 'DB_USERNAME="'${DB_USERNAME}'"' >> .env
+            echo -e 'DB_PASSWORD="'${DB_PASSWORD}'"' >> .env
+            echo -e 'BROADCAST_DRIVER=log' >> .env
+            echo -e 'CACHE_DRIVER=file' >> .env
+            echo -e 'QUEUE_CONNECTION=sync' >> .env
+            echo -e 'SESSION_DRIVER=file' >> .env
+            echo -e 'SESSION_LIFETIME=120' >> .env
+
+      # Create rsync exclude list
+      - run:
+          name: 'Create rsync exclude list'
+          command: |
+            echo -e '.git' >> exclude-list.txt
+            echo -e '.env.example' >> exclude-list.txt
+            echo -e '.gitattributes' >> exclude-list.txt
+            echo -e '.gitignore' >> exclude-list.txt
+            echo -e '.styleci.yml' >> exclude-list.txt
+            echo -e 'exclude-list.txt' >> exclude-list.txt
+
+      # Deploy
+      - deploy:
+          command: |
+            rsync -azvW --delete --exclude-from 'exclude-list.txt' ~/nwa-gis-laravel/ ${username}@${server}:${deploy_path}
+            ssh -p 22 -i ~/.ssh/id_rsa ${username}@${server} 'cd ${deploy_path}; composer install --optimize-autoloader --no-dev; php artisan migrate:fresh --seed --force; php artisan config:cache; php artisan route:cache'
