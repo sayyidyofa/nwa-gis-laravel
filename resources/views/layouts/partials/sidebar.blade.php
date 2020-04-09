@@ -15,15 +15,15 @@
     <!--<a class="item" style="
     padding-top: 36px;">
     </a>-->
-    {{--<a href="{{ route('home') }}" class="item">
+    <a href="{{ route('dashboard.home') }}" class="item">
         <i class="home icon"></i>
         Home
-    </a>--}}
-    <a href="{{ route('admin.home') }}" class="item">
-        <i class="database icon"></i>
-        GIS Index
     </a>
-    <a href="{{ route('admin.map') }}" class="item">
+    <a href="{{ route('dashboard.gisindex') }}" class="item">
+        <i class="database icon"></i>
+        Gis Index
+    </a>
+    <a href="{{ route('dashboard.map') }}" class="item">
         <i class="map icon"></i>
         Map
     </a>
@@ -31,4 +31,10 @@
         <i class="plus icon"></i>
         New GIS Entry
     </a>
+    @hasanyrole('sadmin|admin')
+    <a href="{{ route('user.index') }}" class="item">
+        <i class="user icon"></i>
+        Manage Users
+    </a>
+    @endhasanyrole
 </div>

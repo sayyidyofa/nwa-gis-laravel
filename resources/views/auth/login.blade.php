@@ -30,8 +30,8 @@
                                 {{ csrf_field() }}
 
                                 <div class="form-label-group">
-                                    <input type="text" name="username" id="inputEmail" class="form-control" placeholder="Username" >
-                                    <label for="inputEmail">Username</label>
+                                    <input type="text" name="email" id="inputEmail" class="form-control" placeholder="Email" >
+                                    <label for="inputEmail">Email</label>
 
                                     {{--@if ($errors->has('email'))
                                         <span class="error">{{ $errors->first('email') }}</span>
@@ -46,6 +46,7 @@
                                         <span class="error">{{ $errors->first('password') }}</span>
                                     @endif
                                 </div>
+                                <a class="reset_pass" href="{{route('password.request')}}">Lost your password?</a>
 
                                 <button class="btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2" type="submit">Sign In</button>
                             </form>

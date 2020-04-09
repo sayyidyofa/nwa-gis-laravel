@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Spatie\Permission\Traits\HasRoles;
 
 /**
  * App\User
@@ -35,6 +36,12 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 class User extends Authenticatable
 {
     use Notifiable;
+    use HasRoles;
+
+    public function __construct(array $attributes = [])
+    {
+        parent::__construct($attributes);
+    }
 
     /**
      * The attributes that are mass assignable.
@@ -42,7 +49,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'username', 'password',
+        'name', 'email', 'password',
     ];
 
     /**
@@ -51,7 +58,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password',
+        'password', 'remember_token'
     ];
 
     /**
@@ -60,6 +67,6 @@ class User extends Authenticatable
      * @var array
      */
     protected $casts = [
-        //'email_verified_at' => 'datetime',
+        'email_verified_at' => 'datetime',
     ];
 }

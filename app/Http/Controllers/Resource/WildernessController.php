@@ -5,14 +5,13 @@ namespace App\Http\Controllers\Resource;
 use App\Http\Controllers\Controller;
 use App\Wilderness;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Redirect;
 
 class WildernessController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth', ['except' => ['index', 'show']]);
+        $this->middleware('role:sadmin|admin|user', ['except' => ['index', 'show']]);
     }
 
     /**

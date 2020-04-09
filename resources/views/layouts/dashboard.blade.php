@@ -42,6 +42,9 @@
     $('.delete-confirm').on('click', function (e) {
         e.preventDefault();
         const url = $(this).attr('href');
+        console.log(url);
+        let id = $(this).data("id");
+        let token = $("meta[name='csrf-token']").attr("content");
         swal({
             title: 'Are you sure?',
             text: 'This record and it`s details will be permanantly deleted!',
@@ -49,7 +52,17 @@
             buttons: ["Cancel", "Yes!"],
         }).then(function(value) {
             if (value) {
-                window.location.href = url;
+                $.ajax({
+                    url: url,
+                    type: 'POST',
+                    data: {"id":id, "_method":"DELETE", "_token":token},
+                    success: function(result) {
+                        swal("Success", "The record has been deleted", "success").then(() => {location.reload()})
+                        //console.log('aaaaaa')
+                    },
+                    //done: () => {swal({title: "Success", text: "the record has been deleted", icon: "success", buttons: ["Ok"]}).then(() => {location.reload()})}
+                    error: (jqXHR) => {console.log(jqXHR.responseText)}
+                });
             }
         });
     });

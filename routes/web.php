@@ -20,34 +20,29 @@ Route::namespace('Front')->group(function () {
 });
 
 // Auth
-Route::namespace('Auth')->group(function () {
-    Route::get('/login', 'LoginController@showLoginForm')->name('login');
-    Route::post('/login', 'LoginController@login');
-    Route::get('/logout', 'LoginController@logout')->name('logout');
-});
+Route::auth(['register'=>false]);
+Route::get('/logout', 'Auth\LoginController@logout')->name('logout');
 
 // Dashboard
-Route::namespace('Admin')->group(function () {
-    Route::prefix('admin')->group(function () {
-        Route::name('admin.')->group(function () {
-            Route::get('/', 'AdminController@dashboardPage')->name('home');
-            Route::get('map', 'AdminController@mapPage')->name('map');
+Route::namespace('Dashboard')->group(function () {
+    Route::prefix('dashboard')->group(function () {
+        Route::name('dashboard.')->group(function () {
+            Route::get('/', 'HomeController@dashboardPage')->name('home');
+            Route::get('map', 'HomeController@mapPage')->name('map');
+            Route::get('/gisindex', 'HomeController@gisIndexPage')->name('gisindex');
+            //Route::get('/userindex', function (){})->name('userindex');
         });
     });
 });
 
-// Models
+// Model Resources
 Route::namespace('Resource')->group(function () {
     Route::resources([
         'geometry' => 'GeometryController',
         'wilderness' => 'WildernessController',
-        'gis' => 'GISController'
+        'gis' => 'GISController',
+        'user' => 'UserController'
     ]);
     Route::get('/geometry/{id}/coordinates', 'GeometryController@showCoords');
 });
-
-// Custom Resource routes
-
-
-
 
