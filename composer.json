@@ -18,7 +18,8 @@
         "php-parallel-lint/php-console-color": "^0.2.0",
         "php-parallel-lint/php-console-highlighter": "^0.4.0",
         "psr/http-message": "^1.0",
-        "spatie/laravel-permission": "^3.11"
+        "spatie/laravel-permission": "^3.11",
+        "doctrine/dbal": "*"
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "^2.6",
