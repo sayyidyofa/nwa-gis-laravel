@@ -90,4 +90,4 @@ jobs:
       - deploy:
           command: |
             rsync -azvW --delete --exclude-from 'exclude-list.txt' ~/project/ ${username}@${server}:${deploy_path}
-            ssh -p 22 -i ~/.ssh/id_rsa ${username}@${server} 'cd ${deploy_path} && ls -lah && pwd'
+            ssh -p 22 -i ~/.ssh/id_rsa ${username}@${server} 'echo ${deploy_path} && cd ${deploy_path} && ls -lah && pwd'
