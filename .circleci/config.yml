@@ -78,11 +78,17 @@ jobs:
             echo -e '.gitattributes' >> exclude-list.txt
             echo -e '.gitignore' >> exclude-list.txt
             echo -e '.styleci.yml' >> exclude-list.txt
+            echo -e '_ide_helper.php' >> exclude-list.txt
+            echo -e '.idea' >> exclude-list.txt
+            echo -e '.env.example' >> exclude-list.txt
+            echo -e 'test' >> exclude-list.txt
+            echo -e 'phpunit.xml' >> exclude-list.txt
+            echo -e '.editorconfig' >> exclude-list.txt
             echo -e 'exclude-list.txt' >> exclude-list.txt
 
       # Deploy
       - deploy:
           command: |
             ls -lah
-            rsync -azvW --delete --exclude-from 'exclude-list.txt' ~/nwa-gis-laravel/ ${username}@${server}:${deploy_path}
+            rsync -azvW --delete --exclude-from 'exclude-list.txt' ~/ ${username}@${server}:${deploy_path}
             ssh -p 22 -i ~/.ssh/id_rsa ${username}@${server} 'cd ${deploy_path}; composer install --optimize-autoloader --no-dev; php artisan migrate:fresh --seed --force; php artisan config:cache; php artisan route:cache'
