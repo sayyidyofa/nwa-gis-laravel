@@ -30,4 +30,8 @@ class Geometry extends Model
     public function wilderness() {
         return $this->hasOne('App\Wilderness');
     }
+
+    protected $fillable = [
+        'geotype', 'coordinates', 'wildernesses_id'
+    ];
 }

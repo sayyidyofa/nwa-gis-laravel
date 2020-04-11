@@ -31,7 +31,7 @@ class WildernessController extends Controller
      */
     public function create()
     {
-        //
+        return response()->view('content.dashboard.wilderness.create');
     }
 
     /**
@@ -56,7 +56,7 @@ class WildernessController extends Controller
         catch (\Exception $exception) {
             dd($exception);
         }
-        return Redirect::to('/admin');
+        return response()->view('content.dashboard.geometry.create');
     }
 
     /**

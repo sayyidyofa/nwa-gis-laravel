@@ -34,7 +34,7 @@
 <!-- Scripts -->
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fomantic-ui@2.8.4/dist/semantic.min.js"></script>
-<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9.10.10/dist/sweetalert2.all.min.js" integrity="sha256-kkBIa2jsEbSAOcxhNNuIquIK4IENf+VLUhxnd+TmJk8=" crossorigin="anonymous"></script>
 <script src="{{ asset('js/wkx.min.js') }}"></script>
 @yield('plugin_js')
 <script src="{{ asset('js/main.js') }}" defer></script>
@@ -45,28 +45,50 @@
         console.log(url);
         let id = $(this).data("id");
         let token = $("meta[name='csrf-token']").attr("content");
-        swal({
+        const swalWithBootstrapButtons = Swal.mixin({
+            customClass: {
+                confirmButton: 'btn btn-success',
+                cancelButton: 'btn btn-danger'
+            },
+            buttonsStyling: false
+        });
+
+        swalWithBootstrapButtons.fire({
             title: 'Are you sure?',
-            text: 'This record and it`s details will be permanantly deleted!',
+            text: "You won't be able to revert this!",
             icon: 'warning',
-            buttons: ["Cancel", "Yes!"],
-        }).then(function(value) {
-            if (value) {
+            showCancelButton: true,
+            confirmButtonText: 'Yes, delete it!',
+            cancelButtonText: 'No, cancel!',
+            reverseButtons: true
+        }).then((result) => {
+            if (result.value) {
                 $.ajax({
                     url: url,
                     type: 'POST',
                     data: {"id":id, "_method":"DELETE", "_token":token},
-                    success: function(result) {
-                        swal("Success", "The record has been deleted", "success").then(() => {location.reload()})
-                        //console.log('aaaaaa')
-                    },
-                    //done: () => {swal({title: "Success", text: "the record has been deleted", icon: "success", buttons: ["Ok"]}).then(() => {location.reload()})}
+                    success: function(result) {},
                     error: (jqXHR) => {console.log(jqXHR.responseText)}
                 });
+                swalWithBootstrapButtons.fire(
+                    'Deleted!',
+                    'Data has been deleted.',
+                    'success'
+                ).then(()=>{location.reload();});
+            } else if (
+                /* Read more about handling dismissals below */
+                result.dismiss === Swal.DismissReason.cancel
+            ) {
+                swalWithBootstrapButtons.fire(
+                    'Cancelled',
+                    'Your data is safe :)',
+                    'error'
+                )
             }
-        });
+        })
     });
 </script>
+
 @yield('inline_js')
 </body>
 </html>

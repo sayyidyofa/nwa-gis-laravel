@@ -28,4 +28,8 @@ class Wilderness extends Model
     public function geometry() {
         return $this->belongsTo('App\Geometry', 'id', 'wildernesses_id');
     }
+
+    protected $fillable = [
+        'name', 'boundary_status', 'color',
+    ];
 }

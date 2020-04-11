@@ -21,12 +21,8 @@
                     <option value="Provisional, Subject to Change" {{ $w->boundary_status === "Provisional, Subject to Change" ? "selected" : "" }}>Provisional, Subject to Change</option>
                 </select>
             </div>
-            {{--<div class="field">
-                <label for="geotype">GeoType</label>
-                <input type="text" name="geotype" id="geotype" disabled value="{{$w->geotype}}">
-            </div>--}}
             <button class="ui primary button" type="submit">Edit</button>
-            <a href="{{ route('admin.home') }}" class="ui button">Cancel</a>
+            <a href="{{ route('dashboard.gisindex') }}" class="ui button">Cancel</a>
         </form>
     </div>
 @endsection

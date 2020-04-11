@@ -116,5 +116,6 @@
     <orderEntry type="library" name="Leaflet.fullscreen" level="application" />
     <orderEntry type="library" name="easy-button" level="application" />
     <orderEntry type="library" name="sweetalert2.all" level="application" />
+    <orderEntry type="library" name="leaflet.fullscreen" level="application" />
   </component>
 </module>
