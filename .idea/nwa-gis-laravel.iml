@@ -41,6 +41,7 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/paragonie/random_compat" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/phar-io/manifest" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/phar-io/version" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/phayes/geophp" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/php-parallel-lint/php-console-color" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/php-parallel-lint/php-console-highlighter" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/phpdocumentor/reflection-common" />
@@ -112,5 +113,8 @@
     <orderEntry type="library" name="sweetalert" level="application" />
     <orderEntry type="library" name="bootstrap" level="application" />
     <orderEntry type="library" name="font-awesome" level="application" />
+    <orderEntry type="library" name="Leaflet.fullscreen" level="application" />
+    <orderEntry type="library" name="easy-button" level="application" />
+    <orderEntry type="library" name="sweetalert2.all" level="application" />
   </component>
 </module>

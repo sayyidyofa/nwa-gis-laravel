@@ -7,7 +7,7 @@ function loadDataWithPopup({url, message, callback}/*url, message, callback*/) {
     });
     $.ajax({
         url: url,
-        error: (jqXHR) => {alert(jqXHR.responseText)},
+        error: (jqXHR) => {alert(jqXHR.responseText); myToast.toast('close',{silent: true})},
         success: (data) => {
             myToast.toast('close',{silent: true});
             $('body').toast({
