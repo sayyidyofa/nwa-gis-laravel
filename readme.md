@@ -29,12 +29,11 @@ This is generated via `database/seeds/UserSeeder`
 | sadmin@example.com | secret   | sadmin |
 
 ### To-Do
+To-Dos, issues and feature requests has been moved to [issues](https://github.com/sayyidyofa/nwa-gis-laravel/issues)
 #### Front
-- Set initial map zoom correctly
-- Show a sidebar that views a list of each Wilderness metadata
-- Small info widgets on homepage
+- ~~Set initial map zoom correctly~~
 #### Dashboard
-- Build a CRUD dashboard
+- ~~Build a CRUD dashboard~~
 #### Misc
-- Move this To-Do list somewhere else (issues?)
+- ~~Move this To-Do list somewhere else (issues?)~~
 
