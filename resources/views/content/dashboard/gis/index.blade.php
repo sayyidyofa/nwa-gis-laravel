@@ -22,7 +22,7 @@
                 <td>Data is big. <a href="/geometry/{{$data->id}}/coordinates">Show me</a></td>
                 <td><a href="/geometry/{{$data->id}}/edit" data-tooltip="Edit Geometry Data"><i class="map icon"></i></a> |
                     <a href="/wilderness/{{$data->id}}/edit" data-tooltip="Edit Wilderness Data"><i class="tree icon"></i></a> |
-                    <a href="/wilderness/{{$data->id}}/destroy" data-tooltip="Remove Data" class="delete-confirm"><i class="x icon"></i></a></td>
+                    <a href="/wilderness/{{$data->id}}" data-tooltip="Remove Data" class="delete-confirm"><i class="x icon"></i></a></td>
             </tr>
         @endforeach
     </table>

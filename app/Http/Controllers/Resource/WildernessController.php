@@ -88,13 +88,13 @@ class WildernessController extends Controller
      * @param Wilderness $wilderness
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Wilderness $wilderness)
+    public function update(Request $request, int $id)
     {
-        /*$w = Wilderness::findOrFail($id);
-        $w->name = Input::get('name');
-        $w->boundary_status = Input::get('boundary_status');*/
-        $wilderness->save();
-        return Redirect::to('/admin');
+        $w = Wilderness::findOrFail($id);
+        $w->name = $request->get('name');
+        $w->boundary_status = $request->get('boundary_status');
+        $w->save();
+        return response()->redirectTo('/dashboard/gisindex');
     }
 
     /**

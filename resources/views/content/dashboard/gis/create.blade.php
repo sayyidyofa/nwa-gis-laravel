@@ -288,6 +288,7 @@
         }
 
         function confirmArea(color){
+            closeFullscreen();
             popupForm(color);
         }
 

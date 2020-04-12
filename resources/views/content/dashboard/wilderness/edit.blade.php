@@ -3,7 +3,7 @@
 @section('content')
     <div class="ui container" style="margin-top: 80px;">
         <h3>Edit Wilderness Data</h3>
-        <form action="{{ route('wilderness.update', ['wilderness' => $w]) }}" method="post" class="ui form">
+        <form action="{{ route('wilderness.update', ['id' => $w->id]) }}" method="post" class="ui form">
             {{ csrf_field() }}
             <input type="hidden" name="_method" value="PUT">
             <div class="field">
