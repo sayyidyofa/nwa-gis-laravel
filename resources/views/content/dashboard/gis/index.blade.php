@@ -6,7 +6,8 @@
     <p>Data list: </p>
     <table class="ui selectable sortable celled table">
         <tr class="center aligned">
-            <th class="sorted ascending">ID</th>
+            <th class="sorted ascending">Wilderness ID</th>
+            <th>Geometry ID</th>
             <th>Name</th>
             <th>Boundary Status</th>
             <th>GeoType</th>
@@ -15,7 +16,8 @@
         </tr>
         @foreach($geodata as $data)
             <tr class="center aligned">
-                <td>{{ $data->id }}</td>
+                <td>{{ $data->w_id }}</td>
+                <td>{{ $data->g_id }}</td>
                 <td>{{ $data->name }}</td>
                 <td>{{ $data->boundary_status }}</td>
                 <td>{{ $data->geotype }}</td>

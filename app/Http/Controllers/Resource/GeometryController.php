@@ -10,6 +10,7 @@ class GeometryController extends Controller
 {
     public function __construct()
     {
+        $this->middleware('auth', ['except' => 'index', 'show']);
         $this->middleware('role:sadmin|admin|user', ['except' => ['index', 'show']]);
     }
 
@@ -70,9 +71,9 @@ class GeometryController extends Controller
         //
     }
 
-    public function showCoords(int $id) {
+    /*public function showCoords(int $id) {
         return Geometry::findOrFail($id)->coordinates;
-    }
+    }*/
 
     /**
      * Show the form for editing the specified resource.

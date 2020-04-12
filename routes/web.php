@@ -30,7 +30,6 @@ Route::namespace('Dashboard')->group(function () {
             Route::get('/', 'HomeController@dashboardPage')->name('home');
             Route::get('map', 'HomeController@mapPage')->name('map');
             Route::get('/gisindex', 'HomeController@gisIndexPage')->name('gisindex');
-            //Route::get('/userindex', function (){})->name('userindex');
         });
     });
 });
@@ -43,6 +42,8 @@ Route::namespace('Resource')->group(function () {
         'gis' => 'GISController',
         'user' => 'UserController'
     ]);
-    Route::get('/geometry/{id}/coordinates', 'GeometryController@showCoords');
 });
+
+// Custom Routes
+Route::get('/geometry/{id}/coordinates', 'Dashboard\HomeController@showCoords');
 

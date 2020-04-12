@@ -11,6 +11,7 @@ class WildernessController extends Controller
 {
     public function __construct()
     {
+        $this->middleware('auth', ['except' => 'index', 'show']);
         $this->middleware('role:sadmin|admin|user', ['except' => ['index', 'show']]);
     }
 
@@ -62,12 +63,12 @@ class WildernessController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Wilderness  $wilderness
-     * @return \Illuminate\Http\Response
+     * @param int $id
+     * @return void
      */
-    public function show(Wilderness $wilderness)
+    public function show(int $id)
     {
-        //
+        //return Wilderness::findOrFail($id)->geometry()->coordinate;
     }
 
     /**

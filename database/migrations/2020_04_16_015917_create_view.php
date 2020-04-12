@@ -29,7 +29,7 @@ class CreateView extends Migration
     private function buatView() {
         return <<<SQL
 create view `gis_view` as
-select wildernesses_id as id, name, boundary_status,  geotype, coordinates, color
+select wildernesses.id as w_id, geometries.id as g_id, name, boundary_status,  geotype, coordinates, color
        from wildernesses
            left join geometries on wildernesses.id = geometries.wildernesses_id
 SQL;
