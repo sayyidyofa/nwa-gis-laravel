@@ -26,6 +26,10 @@ class HomeController extends Controller
         return view('content.dashboard.gis.index', compact('geodata', 'count'));
     }
 
+    public function mapPage() {
+        return view('content.dashboard.gis.map');
+    }
+
     public function showCoords(int $id) {
         return Wilderness::findOrFail($id)->geometry->coordinates;
     }
