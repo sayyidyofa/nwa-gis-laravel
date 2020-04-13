@@ -13,8 +13,8 @@ class GISController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth', ['except' => 'index', 'show']);
-        $this->middleware('role:sadmin|admin|user', ['except' => ['index', 'show']]);
+        $this->middleware('auth');
+        $this->middleware('role:sadmin|admin|user');
     }
 
     public function create()
