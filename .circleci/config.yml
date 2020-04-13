@@ -90,4 +90,4 @@ jobs:
       - deploy:
           command: |
             rsync -azvW --delete --exclude-from 'exclude-list.txt' ~/project/ ${username}@${server}:${deploy_path}
-            ssh -p 22 -i ~/.ssh/id_rsa ${username}@${server} -t 'export deploy_path='"'$deploy_path'"';cd ${deploy_path} && composer install --optimize-autoloader --no-dev && php artisan config:cache && php artisan route:cache && php artisan view:cache'
+            ssh -p 22 -i ~/.ssh/id_rsa ${username}@${server} -t 'export deploy_path='"'$deploy_path'"';cd ${deploy_path} && composer install --optimize-autoloader --no-dev && php artisan config:cache && php artisan route:cache && php artisan view:cache && sudo chown -R ${USER}:www-data ${deploy_path} && find ${deploy_path} -type f -exec chmod 664 {} \; && find ${deploy_path} -type d -exec chmod 775 {} \; && sudo chgrp -R www-data storage bootstrap/cache && sudo chmod -R ug+rwx storage bootstrap/cache'
