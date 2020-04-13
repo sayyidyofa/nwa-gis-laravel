@@ -15,6 +15,7 @@
     <div id="map" style="width: 1200px; height: 400px;">
 
     </div>
+    <a href="{{ route('wilderness.create') }}" class="ui primary button" style="margin-top: 20px">Create Wilderness without Geometry</a>
 @endsection
 
 @section('plugin_js')
@@ -25,8 +26,6 @@
     <script src="https://cdn.jsdelivr.net/npm/leaflet-easybutton@2/src/easy-button.js"></script>
     <script src="{{ asset('js/wkx.min.js') }}"></script>
     <script src="{{ asset('js/buffer.min.js') }}"></script>
-    <script src="{{ asset('js/main.js') }}"></script>
-
 @endsection
 
 @section('inline_js')

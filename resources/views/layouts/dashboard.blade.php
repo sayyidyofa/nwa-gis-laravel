@@ -37,12 +37,12 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9.10.10/dist/sweetalert2.all.min.js" integrity="sha256-kkBIa2jsEbSAOcxhNNuIquIK4IENf+VLUhxnd+TmJk8=" crossorigin="anonymous"></script>
 <script src="{{ asset('js/wkx.min.js') }}"></script>
 @yield('plugin_js')
-<script src="{{ asset('js/main.js') }}" defer></script>
+<script src="{{ asset('js/main.js') }}"></script>
 <script>
     $('.delete-confirm').on('click', function (e) {
         e.preventDefault();
         const url = $(this).attr('href');
-        console.log(url);
+        //console.log(url);
         let id = $(this).data("id");
         let token = $("meta[name='csrf-token']").attr("content");
         const swalWithBootstrapButtons = Swal.mixin({
@@ -67,7 +67,7 @@
                     url: url,
                     type: 'POST',
                     data: {"id":id, "_method":"DELETE", "_token":token},
-                    success: function(result) {},
+                    success: function(result) {console.log(result)},
                     error: (jqXHR) => {console.log(jqXHR.responseText)}
                 });
                 swalWithBootstrapButtons.fire(

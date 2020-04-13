@@ -55,7 +55,7 @@ class UserController extends Controller
 
     public function show(int $id)
     {
-        //
+        return response()->json(User::findOrFail($id));
     }
 
     public function edit(int $id)

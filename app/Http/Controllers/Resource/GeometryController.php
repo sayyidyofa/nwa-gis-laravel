@@ -4,108 +4,55 @@ namespace App\Http\Controllers\Resource;
 
 use App\Geometry;
 use App\Http\Controllers\Controller;
+use App\Wilderness;
 use Illuminate\Http\Request;
 
 class GeometryController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth', ['except' => 'index', 'show']);
-        $this->middleware('role:sadmin|admin|user', ['except' => ['index', 'show']]);
+        $this->middleware('auth');
+        $this->middleware('role:sadmin|admin|user');
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function index()
-    {
-        return response()->json(Geometry::all());
+    public function create(int $w_id) { // Requires Wilderness ID
+        $w = Wilderness::findOrFail($w_id);
+        return view('content.dashboard.geometry.create', compact('w'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+    public function store(Request $request) {
+        (new Geometry([
+            'geotype' => $request->geotype,
+            'coordinates' => $request->coordinates,
+            'wildernesses_id' => $request->wilderness_id
+        ]))->save();
+        return response('success');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return string
-     */
-    public function store(Request $request)
+    public function edit(int $id)
     {
-        $request->validate([
-            'geotype' => ['required', 'string'],
-            'coordinates' => ['required', 'string'],
-            'wildernesses_id' => ['required', 'int']
-        ]);
+        $g = Geometry::findOrFail($id);
+        $c = $g->coordinates;
+        $t = $g->geotype;
+        return view('content.dashboard.geometry.edit', compact('c', 't', 'id'));
+    }
+
+    public function update(Request $request, int $id)
+    {
+        $geometry = Geometry::findOrFail($id);
+        $geometry->geotype = $request->geotype ?? $geometry->geotype;
+        $geometry->coordinates = $request->coordinates;
+        $geometry->wildernesses_id = $request->wildernesses_id ?? $geometry->wildernesses_id;
+        $geometry->save();
+        return response('success');
+    }
+
+    public function destroy(int $id)
+    {
         try {
-            $geometry = new Geometry;
-            $geometry->geotype = $request->geotype;
-            $geometry->coordinates = $request->coordinates;
-            $geometry->wildernesses_id = $request->wildernesses_id;
-            $geometry->save();
-            return json_encode(array('status' => 'success'));
+            return Geometry::findOrFail($id)->delete();
+        } catch (\Exception $e) {
+            return response('error', 404);
         }
-        catch (\Exception $exception) {
-            return json_encode(array('status' => 'failed'));
-        }
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Geometry  $geometry
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Geometry $geometry)
-    {
-        //
-    }
-
-    /*public function showCoords(int $id) {
-        return Geometry::findOrFail($id)->coordinates;
-    }*/
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Geometry  $geometry
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Geometry $geometry)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Geometry  $geometry
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Geometry $geometry)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Geometry  $geometry
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Geometry $geometry)
-    {
-        //
     }
 }

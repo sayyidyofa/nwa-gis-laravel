@@ -17,17 +17,9 @@ class GISController extends Controller
         $this->middleware('role:sadmin|admin|user', ['except' => ['index', 'show']]);
     }
 
-    public function index()
-    {
-
-    }
-
     public function create()
     {
-        //dd(\URL::to('/'));
         return view('content.dashboard.gis.create');
-        //return view('content.dashboard');
-
     }
 
     public function store(Request $request)
@@ -48,25 +40,5 @@ class GISController extends Controller
             return response($exception, 500);
         }
         return response('success');
-    }
-
-    public function show(int $id)
-    {
-        //
-    }
-
-    public function edit(int $id)
-    {
-        //
-    }
-
-    public function update(Request $request, int $id)
-    {
-        //
-    }
-
-    public function destroy(int $id)
-    {
-        //
     }
 }

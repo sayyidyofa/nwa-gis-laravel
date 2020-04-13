@@ -21,10 +21,20 @@
                 <td>{{ $data->name }}</td>
                 <td>{{ $data->boundary_status }}</td>
                 <td>{{ $data->geotype }}</td>
-                <td>Data is big. <a href="/geometry/{{$data->id}}/coordinates">Show me</a></td>
-                <td><a href="/geometry/{{$data->id}}/edit" data-tooltip="Edit Geometry Data"><i class="map icon"></i></a> |
-                    <a href="/wilderness/{{$data->id}}/edit" data-tooltip="Edit Wilderness Data"><i class="tree icon"></i></a> |
-                    <a href="/wilderness/{{$data->id}}" data-tooltip="Remove Data" class="delete-confirm"><i class="x icon"></i></a></td>
+                <td>
+                    @isset($data->g_id)
+                        Data is big. <a href="/geometry/{{$data->g_id}}/coordinates">Show WKB dump</a>
+                    @endisset
+                </td>
+                <td>@empty($data->g_id)
+                        <a href="/wilderness/{{ $data->w_id }}/addgeometry" data-tooltip="Add Geometry Data to Wilderness Data"><i class="map outline icon"></i></a>&nbsp;|&nbsp;
+                    @endempty
+                    @isset($data->g_id)
+                        <a href="/geometry/{{$data->g_id}}/edit" data-tooltip="Edit Geometry Coordinates"><i class="map icon"></i></a> |
+                    @endisset
+                    <a href="/wilderness/{{$data->w_id}}/edit" data-tooltip="Edit Wilderness Data"><i class="tree icon"></i></a> |
+                    <a href="/wilderness/{{$data->w_id}}" data-tooltip="Remove Geodata" class="delete-confirm"><i class="x icon"></i></a>
+                </td>
             </tr>
         @endforeach
     </table>
