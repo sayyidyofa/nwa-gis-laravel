@@ -39,6 +39,27 @@
 @yield('plugin_js')
 <script src="{{ asset('js/main.js') }}"></script>
 <script>
+    //$(document).ready(function(){
+        $(".logout-confirm").click(function(){
+            Swal.fire({
+                title: "Logout",
+                text: "Are you sure want to logout?",
+                icon: "question",
+                showCancelButton: true,
+                confirmButtonColor: "#dd3333",
+                cancelButtonColor: "#3085d6",
+                confirmButtonText: "Yes",
+                cancelButtonText: "No",
+            }).then((result) => {
+                if (result.value) {
+                    //form.submit();
+                    window.location.href = "{{ route('logout') }}";
+                }
+            });
+        });
+    //});
+</script>
+<script>
     $('.delete-confirm').on('click', function (e) {
         e.preventDefault();
         const url = $(this).attr('href');
