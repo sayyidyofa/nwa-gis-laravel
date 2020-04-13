@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Login Form - Tutsmake.com</title>
+    <title>{{ (!empty($gtitle) ? $gtitle : 'NWA-GIS').(!empty($second_title) ? ' - '.$second_title : '') }}</title>
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -24,7 +24,7 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-md-9 col-lg-8 mx-auto">
-                            <h3 class="login-heading mb-4">Welcome back!</h3>
+                            <h3 class="login-heading mb-4">Login Page</h3>
                             <form action="{{route('login')}}" method="POST" id="logForm">
 
                                 {{ csrf_field() }}
@@ -32,23 +32,15 @@
                                 <div class="form-label-group">
                                     <input type="text" name="email" id="inputEmail" class="form-control" placeholder="Email" >
                                     <label for="inputEmail">Email</label>
-
-                                    {{--@if ($errors->has('email'))
-                                        <span class="error">{{ $errors->first('email') }}</span>
-                                    @endif--}}
                                 </div>
 
                                 <div class="form-label-group">
                                     <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password">
                                     <label for="inputPassword">Password</label>
-
-                                    @if ($errors->has('password'))
-                                        <span class="error">{{ $errors->first('password') }}</span>
-                                    @endif
                                 </div>
-                                <a class="reset_pass" href="{{route('password.request')}}">Lost your password?</a>
+                                <a class="reset_pass" href="{{route('password.request')}}" style="margin-left: 20px">Lost your password?</a>
 
-                                <button class="btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2" type="submit">Sign In</button>
+                                <button class="btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2" type="submit" style="margin-top: 14px">Sign In</button>
                             </form>
                         </div>
                     </div>
