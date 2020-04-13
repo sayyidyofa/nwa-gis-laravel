@@ -1,0 +1,31 @@
+.jumbotron{
+    min-height: 65vh !important;
+    background-image: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/28963/form-bk.jpg') !important;
+    background-size: cover !important;
+    background-position: center !important;
+    align-content: center !important;
+    justify-content: center !important;
+    display: grid;
+    border-radius: 0 !important;
+}
+
+.title1{
+    color: #FFFFFF !important;
+    font-size: 48px !important;
+    font-weight: 700 !important;
+    padding: 15px 0 15px 0 !important;
+}
+
+.title2{
+    color: #FFFFFF !important;
+    padding: 15px 0 15px 0 !important;
+}
+
+.title3{
+    margin: 30px 0 30px 0 !important;
+}
+
+.copyright{
+    font-size: larger;
+    padding: 0 10 0 10;
+}
