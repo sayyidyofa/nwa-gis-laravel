@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <link rel="shortcut icon" href="{{ asset('favicon.gif') }}">
+    <link rel="shortcut icon" href="{{ asset('favicon.ico') }}">
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -38,6 +38,27 @@
 <script src="{{ asset('js/wkx.min.js') }}"></script>
 @yield('plugin_js')
 <script src="{{ asset('js/main.js') }}"></script>
+<script>
+    //$(document).ready(function(){
+        $(".logout-confirm").click(function(){
+            Swal.fire({
+                title: "Logout",
+                text: "Are you sure want to logout?",
+                icon: "question",
+                showCancelButton: true,
+                confirmButtonColor: "#dd3333",
+                cancelButtonColor: "#3085d6",
+                confirmButtonText: "Yes",
+                cancelButtonText: "No",
+            }).then((result) => {
+                if (result.value) {
+                    //form.submit();
+                    window.location.href = "{{ route('logout') }}";
+                }
+            });
+        });
+    //});
+</script>
 <script>
     $('.delete-confirm').on('click', function (e) {
         e.preventDefault();
