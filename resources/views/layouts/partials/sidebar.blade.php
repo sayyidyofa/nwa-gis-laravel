@@ -1,6 +1,6 @@
 <div class="ui left demo vertical inverted sidebar labeled icon menu visible">
     <div class="item">
-        <img src="https://simpleblog.projects.lazydev.me/uploads/profile_user_1.jpg" alt="Profile Picture" class="ui tiny circular image" style="margin-left: 5px;">
+        <img src="{{ asset('img/user.png') }}" alt="Profile Picture" class="ui tiny circular image" style="margin-left: 5px;">
         {{--<br><div style="width: 123px;">{{ Auth::user()->name }}</div><br>--}}
         <button class="mini ui button" style="margin-top: 8px" onclick="showModal('pp_change');">
             <i class="camera icon"></i>
