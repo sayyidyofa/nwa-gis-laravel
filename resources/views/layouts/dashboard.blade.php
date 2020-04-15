@@ -39,71 +39,60 @@
 @yield('plugin_js')
 <script src="{{ asset('js/main.js') }}"></script>
 <script>
-    //$(document).ready(function(){
-        $(".logout-confirm").click(function(){
-            Swal.fire({
-                title: "Logout",
-                text: "Are you sure want to logout?",
-                icon: "question",
-                showCancelButton: true,
-                confirmButtonColor: "#dd3333",
-                cancelButtonColor: "#3085d6",
-                confirmButtonText: "Yes",
-                cancelButtonText: "No",
-            }).then((result) => {
-                if (result.value) {
-                    //form.submit();
-                    window.location.href = "{{ route('logout') }}";
-                }
-            });
+    $(".logout-confirm").on('click', function() {
+        Swal.fire({
+            title: "Logout",
+            text: "Are you sure want to logout?",
+            icon: "question",
+            showCancelButton: true,
+            confirmButtonColor: "#dd3333",
+            cancelButtonColor: "#3085d6",
+            confirmButtonText: "Yes",
+            cancelButtonText: "No"
+        }).then((result) => {
+            if (result.value) {
+                window.location.href = "{{ route('logout') }}";
+            }
         });
-    //});
-</script>
-<script>
-    $('.delete-confirm').on('click', function (e) {
+    });
+    $('.delete-confirm').on('click', function(e) {
         e.preventDefault();
         const url = $(this).attr('href');
         //console.log(url);
         let id = $(this).data("id");
         let token = $("meta[name='csrf-token']").attr("content");
-        const swalWithBootstrapButtons = Swal.mixin({
-            customClass: {
-                confirmButton: 'btn btn-success',
-                cancelButton: 'btn btn-danger'
-            },
-            buttonsStyling: false
-        });
 
-        swalWithBootstrapButtons.fire({
-            title: 'Are you sure?',
+        Swal.fire({
+            title: "Are you sure?",
             text: "You won't be able to revert this!",
-            icon: 'warning',
+            icon: "warning",
             showCancelButton: true,
+            confirmButtonColor: "#dd3333",
+            cancelButtonColor: "#3085d6",
             confirmButtonText: 'Yes, delete it!',
-            cancelButtonText: 'No, cancel!',
-            reverseButtons: true
+            cancelButtonText: 'No, cancel!'
         }).then((result) => {
             if (result.value) {
                 $.ajax({
                     url: url,
-                    type: 'POST',
+                    type: "POST",
                     data: {"id":id, "_method":"DELETE", "_token":token},
                     success: function(result) {console.log(result)},
                     error: (jqXHR) => {console.log(jqXHR.responseText)}
                 });
-                swalWithBootstrapButtons.fire(
-                    'Deleted!',
-                    'Data has been deleted.',
-                    'success'
-                ).then(()=>{location.reload();});
-            } else if (
-                /* Read more about handling dismissals below */
-                result.dismiss === Swal.DismissReason.cancel
-            ) {
-                swalWithBootstrapButtons.fire(
-                    'Cancelled',
-                    'Your data is safe :)',
-                    'error'
+                Swal.fire(
+                    "Deleted!",
+                    "Data has been deleted.",
+                    "success"
+                ).then(() => {
+                    location.reload();
+                });
+            }
+            else if (result.dismiss === Swal.DismissReason.cancel) {
+                Swal.fire(
+                    "Cancelled",
+                    "Your data is safe :)",
+                    "error"
                 )
             }
         })
