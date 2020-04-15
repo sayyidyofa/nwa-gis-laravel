@@ -26,7 +26,7 @@ class UserController extends Controller
             $users = new User;
             // https://medium.com/@alariva/merging-eloquent-models-in-laravel-6c0fe82cc92b
             $users->fill(array_merge(User::role('user')->get()->toArray(), User::role('admin')->get()->toArray()));
-            $users = $users->all()->except(Auth::id());
+            $users = $users->all();//->except(Auth::id());
             $users = CollectionHelper::paginate($users, $users->count());
         }
         elseif (\Auth::user()->hasRole('admin')) {
