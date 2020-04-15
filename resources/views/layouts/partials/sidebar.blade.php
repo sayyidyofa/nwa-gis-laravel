@@ -2,7 +2,7 @@
     <div class="item">
         <img src="{{ asset('img/user.png') }}" alt="Profile Picture" class="ui tiny circular image" style="margin-left: 5px;">
         {{--<br><div style="width: 123px;">{{ Auth::user()->name }}</div><br>--}}
-        <button class="mini ui button" style="margin-top: 8px" onclick="showModal('pp_change');">
+        <!-- <button class="mini ui button" style="margin-top: 8px" onclick="showModal('pp_change');">
             <i class="camera icon"></i>
             Change
         </button>
@@ -10,7 +10,7 @@
         <button class="mini ui button" style="margin-top: 8px" onclick="showModal('profile_change');">
             <i class="user icon"></i>
             Change
-        </button>
+        </button> -->
     </div>
     <a href="{{ route('dashboard.home') }}" class="item">
         <i class="home icon"></i>
