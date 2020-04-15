@@ -20,18 +20,42 @@
         }
 
         #map {
-            width: 1900px;
-            height: 900px;
+            width: 1127px;
+            height: 90vh;
         }
     </style>
 @endsection
 
 @section('content')
-    <h1 class="ui center aligned header">NWA - GIS</h1>
-
-    <h3 class="ui center aligned header">Map</h3>
-    <div id="map">
-
+    <div class="ui grid">
+        <div class="row">
+            <div class="column padding-reset">
+                <div class="jumbotron ui huge message page">
+                    <h1 class="ui centered huge header title1">NATIONAL WILDERNESS AREAS OF USA</h1>
+                    <h1 class="ui centered header title2">Geographic Information System</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="ui hidden divider"></div>
+    <div class="ui grid">
+        <div class="row">
+            <div class="ui container">
+                <h1 class="ui centered header title3">Map</h1>
+                <div class="ui card">
+                    <div id="map">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="ui hidden divider"></div>
+    <div class="ui inverted vertical footer segment">
+        <div class="ui center aligned container">
+            <div class="ui horizontal inverted small divided copyright">
+                2020 © <strong>Computer Engineering</strong>. All Rights Reserved
+            </div>
+        </div>
     </div>
 @endsection
 
