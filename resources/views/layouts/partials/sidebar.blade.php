@@ -28,6 +28,14 @@
         <i class="plus icon"></i>
         New GIS Entry
     </a>
+    <a href="{{ route('gis.importForm') }}" class="link item">
+        <i class="upload icon"></i>
+        Import GIS<br> Dataset
+    </a>
+    <a href="{{ route('gis.export') }}" class="link item">
+        <i class="download icon"></i>
+        Export GIS<br> Dataset
+    </a>
     @hasanyrole('sadmin|admin')
     <a href="{{ route('user.index') }}" class="item">
         <i class="user icon"></i>

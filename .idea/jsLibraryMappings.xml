@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="JavaScriptLibraryMappings">
-    <file url="PROJECT" libraries="{Leaflet.fullscreen, bootstrap, easy-button, font-awesome, jquery, leaflet, leaflet.fullscreen, semantic, sweetalert, sweetalert2.all}" />
+    <file url="PROJECT" libraries="{jquery, leaflet, semantic, sweetalert, sweetalert2.all}" />
   </component>
 </project>

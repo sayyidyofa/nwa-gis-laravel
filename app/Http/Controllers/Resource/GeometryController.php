@@ -55,4 +55,8 @@ class GeometryController extends Controller
             return response('error', 404);
         }
     }
+
+    public function convert() {
+        return view('content.dashboard.geometry.convert');
+    }
 }

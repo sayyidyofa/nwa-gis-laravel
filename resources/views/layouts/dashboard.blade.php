@@ -35,6 +35,7 @@
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fomantic-ui@2.8.4/dist/semantic.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9.10.10/dist/sweetalert2.all.min.js" integrity="sha256-kkBIa2jsEbSAOcxhNNuIquIK4IENf+VLUhxnd+TmJk8=" crossorigin="anonymous"></script>
+<script src="{{ asset('js/ajax-progress.min.js') }}"></script>
 <script src="{{ asset('js/wkx.min.js') }}"></script>
 @yield('plugin_js')
 <script src="{{ asset('js/main.js') }}"></script>

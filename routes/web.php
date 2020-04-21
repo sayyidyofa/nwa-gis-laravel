@@ -53,3 +53,8 @@ Route::namespace('Resource')->group(function () {
 Route::get('/geometry/{id}/coordinates', 'Dashboard\HomeController@showCoords'); // Dumps geometry coordinates
 Route::get('/wilderness/{id}/addgeometry', 'Resource\GeometryController@create');
 Route::post('/wilderness/{id}/addgeometry', 'Resource\GeometryController@store');
+Route::get('/gis/export','Resource\GISController@export')->name('gis.export');
+Route::get('/gis/import', 'Dashboard\HomeController@importForm')->name('gis.importForm');
+Route::post('/gis/import', 'Resource\GISController@import')->name('gis.import');
+//Route::get('/geometry/convert', 'Resource\GeometryController@convert')->name('geometry.convert');
+Route::get('/geometry/{id}', 'Resource\GISController@show')->name('gis.show');

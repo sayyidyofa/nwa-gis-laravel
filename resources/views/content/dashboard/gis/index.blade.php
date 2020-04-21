@@ -23,7 +23,8 @@
                 <td>{{ $data->geotype }}</td>
                 <td>
                     @isset($data->g_id)
-                        Data is big. <a href="/geometry/{{$data->g_id}}/coordinates">Show WKB dump</a>
+                        <a href="{{ route('gis.show', ['id' => $data->g_id]) }}">Show on Map</a>
+                        {{--Data is big. <a href="/geometry/{{$data->g_id}}/coordinates">Show WKB dump</a>--}}
                     @endisset
                 </td>
                 <td>@empty($data->g_id)

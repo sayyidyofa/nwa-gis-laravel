@@ -1,15 +1,15 @@
 function loadDataWithPopup({url, message, callback}/*url, message, callback*/) {
+    $.fn.toast.settings.silent = true;
     let myToast = $('body').toast({
             class: 'info',
             displayTime: 0,
-            message: message,
-            silent: true
+            message: message
     });
     $.ajax({
         url: url,
         error: (jqXHR) => {alert(jqXHR.responseText); myToast.toast('close',{silent: true})},
         success: (data) => {
-            myToast.toast('close',{silent: true});
+            myToast.toast('close');
             $('body').toast({
                 message: 'Data load complete',
                 showProgress: 'bottom'

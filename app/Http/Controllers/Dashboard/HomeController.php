@@ -33,4 +33,8 @@ class HomeController extends Controller
     public function showCoords(int $id) {
         return Wilderness::findOrFail($id)->geometry->coordinates;
     }
+
+    public function importForm() {
+        return view('content.dashboard.gis.import');
+    }
 }

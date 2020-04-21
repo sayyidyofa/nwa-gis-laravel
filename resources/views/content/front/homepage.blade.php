@@ -105,8 +105,8 @@
 
                 data.forEach((item, index) => {
                     try {
-                        console.log(item.color);
-                        let geoJSONObj = wkx.Geometry.parse(new buffer.Buffer(item.coordinates, 'hex')).toGeoJSON();
+                        //console.log(JSON.stringify(wkx.Geometry.parse(new buffer.Buffer(item.coordinates, 'hex')).toGeoJSON()));
+                        //let geoJSONObj = /*wkx.Geometry.parse(item.coordinates).toGeoJSON(); */wkx.Geometry.parse(new buffer.Buffer(item.coordinates, 'hex')).toGeoJSON();
                         field_response.features.push({
                             type: "Feature",
                             properties: {
@@ -118,7 +118,7 @@
                             },
                             geometry: {
                                 type: item.geotype,
-                                coordinates: geoJSONObj.coordinates
+                                coordinates: JSON.parse(item.coordinates)
                             }
                         });
                     } catch (e) {

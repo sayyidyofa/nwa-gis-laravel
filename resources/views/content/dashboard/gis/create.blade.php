@@ -461,7 +461,7 @@
                 data.forEach((item, index) => {
                     try {
                         //console.log(item.color);
-                        let geoJSONObj = wkx.Geometry.parse(new buffer.Buffer(item.coordinates, 'hex')).toGeoJSON();
+                        //let geoJSONObj = wkx.Geometry.parse(new buffer.Buffer(item.coordinates, 'hex')).toGeoJSON();
 
                         //const coba2 = new buffer.Buffer(item.coordinates, 'hex').buffer;
                         //console.log(buf2hex(coba2).toUpperCase()); // = 04080c10
@@ -479,7 +479,7 @@
                             },
                             geometry: {
                                 type: item.geotype,
-                                coordinates: geoJSONObj.coordinates
+                                coordinates: JSON.parse(item.coordinates)
                             }
                         });
                     } catch (e) {
