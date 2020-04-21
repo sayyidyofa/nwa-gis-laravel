@@ -36,6 +36,7 @@ jobs:
             - v1-dependencies-{{ checksum "composer.lock" }}
             # fallback to using the latest cache if no exact match is found
             - v1-dependencies-
+      - run: sudo apt-get install libpng-dev -y
       - run: sudo -E docker-php-ext-install -j$(nproc) gd
       - run: composer install -n --prefer-dist
       - save_cache:
