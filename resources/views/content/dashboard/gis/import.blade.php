@@ -6,7 +6,7 @@
     <form action="" method="post" class="ui centered form">
         <div class="field">
             <div class="ui massive icon input">
-                <input type="file" accept=".xlsx, .xls, .csv" name="file">
+                <input type="file" accept=".xlsx, .xls, .csv" name="file" required>
                 <i class="upload icon"></i>
             </div>
         </div>

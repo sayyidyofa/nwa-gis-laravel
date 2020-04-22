@@ -12,9 +12,7 @@ use App\Imports\WildernessesImport;
 use App\Wilderness;
 use Doctrine\DBAL\Query\QueryException;
 use Illuminate\Http\Request;
-use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Schema;
-use Illuminate\Support\Facades\Storage;
 use Session;
 
 class GISController extends Controller
@@ -60,24 +58,23 @@ class GISController extends Controller
     }
 
     public function import(Request $request) {
+
+        $this->validate($request, [
+            'file' => 'required|file|mimes:xlsx,xls,csv'
+        ], ['Uploaded file is not a correct dataset file']);
         $file = $request->file('file');
-        // membuat nama file unik
-        $nama_file = Carbon::now()->timestamp.'.'.$file->getClientOriginalExtension();
         $old_w_data = null;
-        // upload ke folder file_siswa di dalam folder public
-        $file->move('gis_imports', $nama_file);
         try {
-            //if ()
             $old_w_data = Wilderness::all();
             Session::put('begin_w_id', Wilderness::latest()->first()->id + 1); // https://stackoverflow.com/questions/53503525/laravel-5-6-global-and-dynamic-variable
-            (new WildernessesImport)->import(public_path('/gis_imports/'.$nama_file));
+            (new WildernessesImport)->import($file->getPathName());
         } catch(\Exception $exception) {
-            (new WildernessesImport)->import(public_path('/gis_imports/'.$nama_file));
+            (new WildernessesImport)->import($file->getPathName());
             Session::put('begin_w_id', Wilderness::orderBy('id')->first()->id);
         }
 
         try {
-            (new GeometriesImport)->import(public_path('/gis_imports/'.$nama_file));
+            (new GeometriesImport)->import($file->getPathName());
         } catch (\Exception $exception) {
             if (isset($old_w_data) && $old_w_data->isNotEmpty()) { // https://stackoverflow.com/questions/20563166/eloquent-collection-counting-and-detect-empty
                 $last_id = Wilderness::latest()->first()->id; // https://laracasts.com/discuss/channels/laravel/how-to-get-last-id-in-laravel
@@ -95,10 +92,6 @@ class GISController extends Controller
             else
                 return response('Your uploaded dataset conflicts with current database! Unreadable dataset. Error: '.$exception, 422);
         }
-        // TODO: fix bug -> files wont delete after importing
-        //array_map('unlink', glob(public_path('/gis_imports/*')));
-        //\File::delete('gis_imports/'.$nama_file);
-        //\Storage::deleteDirectory('gis_imports');
         return response('success', 200);
     }
 }
