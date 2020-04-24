@@ -456,28 +456,26 @@
 
                 data.forEach((item, index) => {
                     try {
-                        //console.log(item.color);
-                        let geoJSONObj = wkx.Geometry.parse(new buffer.Buffer(item.coordinates, 'hex')).toGeoJSON();
-
-                        //const coba2 = new buffer.Buffer(item.coordinates, 'hex').buffer;
-                        //console.log(buf2hex(coba2).toUpperCase()); // = 04080c10
-
-                        //console.log(new buffer.Buffer(item.coordinates, 'hex'));
-                        //console.log(JSON.stringify(geoJSONObj));
-                        field_response.features.push({
-                            type: "Feature",
-                            properties: {
-                                color: item.color,
-                                popupContent: {
-                                    wildernessName: item["name"],
-                                    boundaryStatus: item.boundary_status
+                        //console.log(JSON.stringify(wkx.Geometry.parse(new buffer.Buffer(item.coordinates, 'hex')).toGeoJSON()));
+                        //let geoJSONObj = /*wkx.Geometry.parse(item.coordinates).toGeoJSON(); */wkx.Geometry.parse(new buffer.Buffer(item.coordinates, 'hex')).toGeoJSON();
+                        if (item.g_id !== null) {
+                            field_response.features.push({
+                                type: "Feature",
+                                properties: {
+                                    color: item.color,
+                                    popupContent: {
+                                        wildernessName: item["name"],
+                                        boundaryStatus: item.boundary_status,
+                                        w_id : item.g_id,
+                                        g_id: item.g_id
+                                    }
+                                },
+                                geometry: {
+                                    type: item.geotype,
+                                    coordinates: JSON.parse(item.coordinates)
                                 }
-                            },
-                            geometry: {
-                                type: item.geotype,
-                                coordinates: geoJSONObj.coordinates
-                            }
-                        });
+                            });
+                        }
                     } catch (e) {
                         console.log(e)
                     }
