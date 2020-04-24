@@ -11,7 +11,7 @@
 
 @section('content')
     <h1>Map</h1>
-    <div id="map" style="width: 1200px; height: 400px;">
+    <div id="map" style="width: 1200px; height: 400px;"></div>
 @endsection
 
 @section('plugin_js')
@@ -323,7 +323,11 @@
             </tr>
             </table>
             <br>
-            <button class="ui mini primary button" type="button">Edit</button>
+            <a href="/wilderness/${field.w_id}/edit" class="ui mini primary button">Edit Data</a>
+            &nbsp;
+            <a href="/geometry/${field.g_id}/edit" class="ui mini positive button">Edit Geom</a>
+            &nbsp;
+            <a href="/wilderness/${field.w_id}" class="ui mini negative button delete-confirm">Remove</a>
             `
         }
 
@@ -428,12 +432,14 @@
 
         function onEachFeatureCallback(feature, layer){
             if (feature.properties && feature.properties.popupContent) {
-                let { wildernessName, boundaryStatus } = feature.properties.popupContent;
+                let { wildernessName, boundaryStatus, w_id, g_id } = feature.properties.popupContent;
                 let content = {
                     wildernessName: wildernessName,
-                    boundaryStatus: boundaryStatus
+                    boundaryStatus: boundaryStatus,
+                    w_id : w_id,
+                    g_id : g_id
                 };
-
+                console.log(content);
                 layer.bindPopup(getPopupContent(content));
             }
         }
@@ -466,20 +472,24 @@
 
                         //console.log(new buffer.Buffer(item.coordinates, 'hex'));
                         //console.log(JSON.stringify(geoJSONObj));
-                        field_response.features.push({
-                            type: "Feature",
-                            properties: {
-                                color: item.color,
-                                popupContent: {
-                                    wildernessName: item["name"],
-                                    boundaryStatus: item.boundary_status
+                        if (item.g_id !== null) {
+                            field_response.features.push({
+                                type: "Feature",
+                                properties: {
+                                    color: item.color,
+                                    popupContent: {
+                                        wildernessName: item["name"],
+                                        boundaryStatus: item.boundary_status,
+                                        w_id : item.g_id,
+                                        g_id: item.g_id
+                                    }
+                                },
+                                geometry: {
+                                    type: item.geotype,
+                                    coordinates: JSON.parse(item.coordinates)
                                 }
-                            },
-                            geometry: {
-                                type: item.geotype,
-                                coordinates: JSON.parse(item.coordinates)
-                            }
-                        });
+                            });
+                        }
                     } catch (e) {
                         console.log(e)
                     }

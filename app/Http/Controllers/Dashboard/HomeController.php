@@ -27,7 +27,8 @@ class HomeController extends Controller
     }
 
     public function mapPage() {
-        return view('content.dashboard.gis.map');
+        $gisdata = GIS::all();
+        return view('content.dashboard.gis.map', compact('gisdata'));
     }
 
     public function showCoords(int $id) {

@@ -414,7 +414,7 @@
                     boundary_status: data.desc,
                     geotype: 'Polygon',
                     // https://stackoverflow.com/questions/40031688/javascript-arraybuffer-to-hex
-                    coordinates: buf2hex(wkx.Geometry.parseGeoJSON({type:'Polygon', coordinates: polygonGeoJSON.geometry.coordinates}).toWkb().buffer).toUpperCase()
+                    coordinates: JSON.stringify(polygonGeoJSON.geometry.coordinates) //buf2hex(wkx.Geometry.parseGeoJSON({type:'Polygon', coordinates: polygonGeoJSON.geometry.coordinates}).toWkb().buffer).toUpperCase()
                 },
                 error: function (xhr, status, error) {
                     console.log(xhr.responseText);
@@ -456,6 +456,7 @@
             url: '/gisdata',
             message: 'Loading GIS data...',
             callback: (data) => {
+                //console.log(data);
                 let field_response = {type: "FeatureCollection", features: []};
 
                 data.forEach((item, index) => {
@@ -468,20 +469,24 @@
 
                         //console.log(new buffer.Buffer(item.coordinates, 'hex'));
                         //console.log(JSON.stringify(geoJSONObj));
-                        field_response.features.push({
-                            type: "Feature",
-                            properties: {
-                                color: item.color,
-                                popupContent: {
-                                    wildernessName: item["name"],
-                                    boundaryStatus: item.boundary_status
+                        if (item.g_id !== null) {
+                            field_response.features.push({
+                                type: "Feature",
+                                properties: {
+                                    color: item.color,
+                                    popupContent: {
+                                        wildernessName: item["name"],
+                                        boundaryStatus: item.boundary_status,
+                                        w_id : item.g_id,
+                                        g_id: item.g_id
+                                    }
+                                },
+                                geometry: {
+                                    type: item.geotype,
+                                    coordinates: JSON.parse(item.coordinates)
                                 }
-                            },
-                            geometry: {
-                                type: item.geotype,
-                                coordinates: JSON.parse(item.coordinates)
-                            }
-                        });
+                            });
+                        }
                     } catch (e) {
                         console.log(e)
                     }

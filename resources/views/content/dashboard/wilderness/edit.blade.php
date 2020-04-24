@@ -22,7 +22,7 @@
                 </select>
             </div>
             <button class="ui primary button" type="submit">Edit</button>
-            <a href="{{ route('dashboard.gisindex') }}" class="ui button">Cancel</a>
+            <a href="{{ url()->previous() }}" class="ui button">Cancel</a>
         </form>
     </div>
 @endsection

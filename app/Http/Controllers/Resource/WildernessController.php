@@ -51,7 +51,7 @@ class WildernessController extends Controller
         $w->name = $request->get('name');
         $w->boundary_status = $request->get('boundary_status');
         $w->save();
-        return response()->redirectTo('/dashboard/gisindex');
+        return \redirect()->back();
     }
 
     public function destroy(int $id)
