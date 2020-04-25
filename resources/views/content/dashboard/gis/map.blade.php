@@ -26,7 +26,7 @@
 
 @section('inline_js')
     <script>
-        "use strict"
+        "use strict";
 
         var url = "{{ URL::to('/') }}";
         var centerView = new L.LatLng(38.8948932, -77.0365529);
@@ -57,65 +57,6 @@
         L.marker(centerView, {
             title: "U.S Forest Department Office"
         }).addTo(mymap);
-
-        // var startDrawingButton = L.easyButton({
-        //     id: 'start-drawing-button',
-        //     states: [{
-        //         icon: 'fa fa-pen',
-        //         title: 'Start drawing',
-        //         stateName: 'start-polyline',
-        //         onClick: (btn, map) => {
-        //             btn.button.style.backgroundColor = "#f00";
-        //             btn.button.style.color = "#fff";
-        //             document.getElementById("map").style.cursor = "crosshair";
-
-        //             btn.state('cancel-polyline');
-        //             drawingState = true;
-        //         }
-        //     }, {
-        //         icon: 'fa fa-times',
-        //         title: 'Cancel drawing',
-        //         stateName: 'cancel-polyline',
-        //         onClick: (btn, map) => {
-        //             btn.button.style.backgroundColor = "#fff";
-        //             btn.button.style.color = "#000";
-        //             document.getElementById("map").style.cursor = "grab";
-
-        //             btn.state('start-polyline');
-        //             cancelPolyline();
-        //             drawingState = false;
-        //         }
-        //     }]
-        // });
-        // startDrawingButton.addTo(mymap);
-
-        // var undoButton = L.easyButton({
-        //     id: 'undo-polyline',
-        //     states: [{
-        //         icon: 'fa fa-undo',
-        //         ttle: 'Cancel last point',
-        //         stateName: 'undo-polyline',
-        //         onClick: (btn, map) => {
-        //             undoPoint();
-        //         }
-        //     }]
-        // });
-        // undoButton.addTo(mymap);
-        // undoButton.disable();
-
-        // var finishButton = L.easyButton({
-        //     id: 'finish-polyline',
-        //     states: [{
-        //         icon: 'fa fa-check',
-        //         title: 'Finish drawing',
-        //         stateName: 'finish-polyline',
-        //         onClick: (btn, map) => {
-        //             drawArea();
-        //         }
-        //     }]
-        // });
-        // finishButton.addTo(mymap);
-        // finishButton.disable();
 
         function onMapClick(e) {
             if(!drawingState) return;
@@ -180,266 +121,40 @@
             );
         }
 
-        // function startPolyline(latlng){
-        //     placeFirstPoint(latlng);
-        //     startPolylineFlag = true;
-        // }
-
-        // function finishPolyline(){
-        //     removeMapLayers();
-
-        //     startPolylineFlag = false;
-        //     pols = [];
-        //     polygon = undefined;
-        //     polyline = undefined;
-        //     helpLine = undefined;
-        //     helpPolygon = undefined;
-
-        //     finishButton.disable();
-        //     undoButton.disable();
-        // }
-
-        // function cancelPolyline(){
-        //     if(polyline === undefined) return;
-
-        //     removeMapLayers();
-        //     finishPolyline();
-        // }
-
-//         function undoPoint(){
-//             if(!drawingState) return;
-//             if(pols.length === 0) return;
-
-//             pols.pop();
-
-//             polyline.setLatLngs(pols);
-//             helpPolygon.setLatLngs(pols);
-
-//             if(!validateArea()){
-//                 finishButton.disable();
-//             }
-
-//             if(pols.length === 0){
-//                 finishPolyline();
-//                 undoButton.disable();
-//             }
-//         }
-
-//         function validateArea(){
-//             return pols.length > 2;
-
-//         }
-
-//         function drawArea(){
-//             if(polyline === undefined) return;
-//             if(!validateArea()) return;
-
-//             drawingState = false;
-
-//             let randCol = '#' + (function co(lor){   return (lor +=
-//                 [0,1,2,3,4,5,6,7,8,9,'a','b','c','d','e','f'][Math.floor(Math.random()*16)])
-//             && (lor.length === 6) ?  lor : co(lor); })('');
-
-//             polygon = L.polygon([pols], {
-//                 color: randCol,
-//                 fillOpacity: 0.4
-//             }).addTo(mymap);
-//             let popup = L.popup({
-//                 closeButton: false,
-//                 autoClose: false,
-//                 closeOnEscapeKey: false,
-//                 closeOnClick: false,
-//             })
-//                 .setContent(
-//                     `
-// <button onclick="cancelArea()">
-//     <i class="times circle icon"></i>
-// </button> | <button onclick="confirmArea('${randCol}')">
-// <i class="check circle icon"></i></button>`);
-
-//             polygon.bindPopup(popup).openPopup();
-//         }
-
-//         function drawHelpArea(){
-//             if(polyline === undefined) return;
-//             if(!validateArea()) return;
-
-//             if(helpPolygon){
-//                 helpPolygon.setLatLngs(pols)
-//             }
-//             else {
-//                 helpPolygon = L.polygon([pols], {
-//                     color: '#ee0',
-//                     stroke: false,
-//                     className: 'help-layer'
-//                 });
-//                 helpPolygon.addTo(mymap);
-//             }
-//         }
-
-//         function cancelArea(){
-//             drawingState = true;
-//             mymap.removeLayer(polygon);
-//         }
-
-//         function confirmArea(color){
-//             closeFullscreen();
-//             popupForm(color);
-//         }
-
-        // function removeMapLayers(){
-        //     mymap.removeLayer(polyline);
-        //     mymap.removeLayer(helpLine);
-        //     mymap.removeLayer(helpPolygon);
-        //     mymap.removeLayer(firstPoint);
-        // }
-
-        // function placeFirstPoint(latlng){
-        //     let icon = L.divIcon({
-        //         className: 'first-point',
-        //         iconSize: [10, 10],
-        //         iconAnchor: [5, 5]
-        //     });
-
-        //     firstPoint = L.marker(latlng, {icon: icon});
-        //     firstPoint.addTo(mymap);
-        //     firstPoint.on('click', function(){
-        //         if(validateArea()){
-        //             drawArea();
-        //         }
-        //     });
-        // }
-
         function getPopupContent(field){
             return `
-            <table>
-            <tr>
-                <th>Wliderness Name:</th>
-                <td>${field.wildernessName}</td>
-            </tr>
-            <tr>
-                <th>Boundary Status:</th>
-                <td>${field.boundaryStatus}</td>
-            </tr>
-            </table>
-            <br>
+<div class="ui card">
+  <div class="image" id="${field.w_id}">
+    <img src="${field.img_url}" alt="Wilderness Image">
+  </div>
+  <div class="content">
+    <span class="header">${field.wildernessName}</span>
+    <div class="description">
+      Status:&nbsp;${field.boundaryStatus}
+    </div>
+  </div>
+    <div class="extra content">
             <a href="/wilderness/${field.w_id}/edit" class="ui mini primary button">Edit Data</a>
             &nbsp;
             <a href="/geometry/${field.g_id}/edit" class="ui mini positive button">Edit Geom</a>
             &nbsp;
-            <a href="/wilderness/${field.w_id}" class="ui mini negative button delete-confirm">Remove</a>
+            <a href="/wilderness/${field.w_id}" id="w-${field.w_id}" class="ui mini negative button delete-confirm" onclick="deleteHandler(event, '/wilderness/${field.w_id}')">Remove</a>
+    </div>
+</div>
+
             `
         }
 
-    //     async function popupForm(color){
-    //         const { value: formValues, dismiss } = await Swal.fire({
-    //             title: 'Wilderness Form',
-    //             html: `
-    //   <div id="field-form">
-    //     <table>
-    //       <tr>
-    //         <th>W. Name</th>
-    //         <td><input type="text" id="area_name" class="swal2-input" placeholder="Wilderness Name"></td>
-    //       </tr>
-    //       <tr>
-    //         <th>W. Status</th>
-    //         <td><select id="desc" class="swal2-input"><option value="Final" selected>Final</option><option value="Provisional, Subject to Change">Provisional, Subject to Change</option></select></td>
-    //       </tr>
-    //     </table>
-    //   </div>
-    //   `,
-    //             focusConfirm: false,
-    //             confirmButtonText: 'Save',
-    //             confirmButtonColor: '#0c0',
-    //             allowOutsideClick: false,
-    //             allowEscapeKey: false,
-    //             allowEnterKey: false,
-    //             showCancelButton: true,
-    //             cancelButtonText: 'Cancel',
-    //             preConfirm: () => {
-    //                 let v = {
-    //                     areaName: document.getElementById('area_name').value,
-    //                     desc: document.getElementById('desc').value,
-    //                 };
-
-    //                 // check empty value
-    //                 for (let [, val] of Object.entries(v)) {
-    //                     if(val === ''){
-    //                         Swal.showValidationMessage(`Harap isi semua input yang ada`);
-    //                     }
-    //                 }
-    //                 return v;
-    //             }
-    //         });
-
-    //         polygon.closePopup();
-    //         polygon.unbindPopup();
-
-    //         if(dismiss === Swal.DismissReason.cancel){
-    //             cancelArea();
-    //             return;
-    //         }
-
-    //         polygon.bindPopup(getPopupContent(formValues)).openPopup();
-
-    //         let sendData = {
-    //             color: color,
-    //             areaName: formValues.areaName,
-    //             desc: formValues.desc,
-    //         };
-    //         sendPolygonJSON(sendData);
-
-    //         drawingState = true;
-    //         finishPolyline();
-    //     }
-
-        // function sendPolygonJSON(data){
-        //     let polygonGeoJSON = polygon.toGeoJSON(15);
-        //     polygonGeoJSON.properties = {
-        //         color: data.color,
-        //         popupContent: {
-        //             areaName: data.areaName,
-        //             desc: data.desc
-        //         }
-        //     };
-
-        //     $.ajax({
-        //         headers: {
-        //             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        //         },
-        //         url: `${url}/gis`,
-        //         type: 'POST',
-        //         cache: false,
-        //         data: {
-        //             color: data.color,
-        //             name: data.areaName,
-        //             boundary_status: data.desc,
-        //             geotype: 'Polygon',
-        //             // https://stackoverflow.com/questions/40031688/javascript-arraybuffer-to-hex
-        //             coordinates: buf2hex(wkx.Geometry.parseGeoJSON({type:'Polygon', coordinates: polygonGeoJSON.geometry.coordinates}).toWkb().buffer).toUpperCase()
-        //         },
-        //         error: function (xhr, status, error) {
-        //             console.log(xhr.responseText);
-        //             console.log('Error sending data', error);
-        //             console.log(data.color,data.areaName,data.desc,JSON.stringify(polygonGeoJSON.geometry.coordinates))
-        //         },
-        //         success: function(response){
-        //             console.log(response);
-        //             Swal.fire('Success', 'GIS Entry added', 'success').then(()=>{location.reload();});
-        //         }
-        //     });
-        // }
-
         function onEachFeatureCallback(feature, layer){
             if (feature.properties && feature.properties.popupContent) {
-                let { wildernessName, boundaryStatus, w_id, g_id } = feature.properties.popupContent;
+                let { wildernessName, boundaryStatus, w_id, g_id, img_url } = feature.properties.popupContent;
                 let content = {
                     wildernessName: wildernessName,
                     boundaryStatus: boundaryStatus,
                     w_id : w_id,
-                    g_id : g_id
+                    g_id : g_id,
+                    img_url: img_url
                 };
-                console.log(content);
                 layer.bindPopup(getPopupContent(content));
             }
         }
@@ -455,6 +170,14 @@
                 case 27: onKeyDownEscape(); break;
             }
         };
+
+        let dummyImages = [];
+        let idx = 0;
+
+        $.ajax({
+            url: "{{ route('dummy-images', ['perPage' => \App\GIS::all()->count()]) }}",
+            success: (data) => {dummyImages = JSON.parse(data);}
+        });
 
         loadDataWithPopup({
             url: '/gisdata',
@@ -481,7 +204,8 @@
                                         wildernessName: item["name"],
                                         boundaryStatus: item.boundary_status,
                                         w_id : item.g_id,
-                                        g_id: item.g_id
+                                        g_id: item.g_id,
+                                        img_url: dummyImages[idx]
                                     }
                                 },
                                 geometry: {
@@ -490,6 +214,7 @@
                                 }
                             });
                         }
+                        idx++;
                     } catch (e) {
                         console.log(e)
                     }

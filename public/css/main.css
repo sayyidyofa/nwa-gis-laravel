@@ -1,0 +1,5 @@
+.gis-image {
+    width: 225px;
+    height: 80px;
+    object-fit: cover;
+}

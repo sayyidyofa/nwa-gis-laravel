@@ -69,10 +69,34 @@
             id: 'mapbox/satellite-v9',
             accessToken: 'pk.eyJ1Ijoic2F5eWlkeW9mYSIsImEiOiJjazdvaHVyanUwNmF3M2dxbnMzaHJqd2hmIn0.eurgCqMjF3XR7m0oZ1Ludw'
         }).addTo(mymap);
-        var marker = L.marker(centerView).addTo(mymap);
+        var marker = L.marker(centerView, {title: 'Dummy Marker 0'}).addTo(mymap);
+        marker.bindPopup('<div class="ui card">\n' +
+            '  <div class="image">\n' +
+            '    <img src="https://pixabay.com/get/57e6d24a4d52a414f1dc84609629317c173cd6e5524c704c7d2873d69f49cc58_640.jpg" alt="Wilderness Image">\n' +
+            '  </div>\n' +
+            '  <div class="content">\n' +
+            '    <span class="header">Dummy Marker Name 0</span>\n' +
+            '    <div class="description">\n' +
+            '      Dummy Marker Description\n' +
+            '    </div>\n' +
+            '  </div>\n' +
+            '</div>');
 
         function getPopupContent(field) {
             return `
+<div class="ui card">
+  <div class="image" id="${field.w_id}">
+    <img src="${field.img_url}" alt="Wilderness Image">
+  </div>
+  <div class="content">
+    <span class="header">${field.wildernessName}</span>
+    <div class="description">
+      Status:&nbsp;${field.boundaryStatus}
+    </div>
+  </div>
+</div>
+            `
+            /*return `
     <table>
       <tr>
         <th>Name</th>
@@ -82,20 +106,34 @@
         <th>Boundary Status</th>
         <td>${field.boundaryStatus}</td>
       </tr>
+      <tr>
+        <th></th>
+        <td><img src="${field.img_url}" alt="Image" class="gis-image"></td>
+      </tr>
     </table>
-  `
+  `*/
         }
         function onEachFeatureCallback(feature, layer){
             if (feature.properties && feature.properties.popupContent) {
-                let { wildernessName, boundaryStatus } = feature.properties.popupContent;
+                let { wildernessName, boundaryStatus, img_url, w_id } = feature.properties.popupContent;
                 let content = {
                     wildernessName: wildernessName,
-                    boundaryStatus: boundaryStatus
+                    boundaryStatus: boundaryStatus,
+                    w_id: w_id,
+                    img_url: img_url
                 };
 
                 layer.bindPopup(getPopupContent(content));
             }
         }
+
+        let dummyImages = [];
+        let idx = 0;
+
+        $.ajax({
+            url: "{{ route('dummy-images', ['perPage' => \App\GIS::all()->count()]) }}",
+            success: (data) => {dummyImages = JSON.parse(data);}
+        });
 
         loadDataWithPopup({
             url: '/gisdata',
@@ -115,8 +153,8 @@
                                     popupContent: {
                                         wildernessName: item["name"],
                                         boundaryStatus: item.boundary_status,
-                                        w_id : item.g_id,
-                                        g_id: item.g_id
+                                        w_id: item.w_id,
+                                        img_url: dummyImages[idx]
                                     }
                                 },
                                 geometry: {
@@ -125,6 +163,7 @@
                                 }
                             });
                         }
+                        idx++;
                     } catch (e) {
                         console.log(e)
                     }
@@ -138,5 +177,56 @@
                 }).addTo(mymap);
             }
         });
+
+        // Add 4 random markers
+
+        let marker1 = L.marker([39.8948932, -76.0365529], {title: 'Marker 01'}).addTo(mymap);
+        marker1.bindPopup('<div class="ui card">\n' +
+            '  <div class="image">\n' +
+            '    <img src="https://pixabay.com/get/55e2dc474c5aad14f1dc84609629317c173cd6e5524c704c7d2873d69f49cc58_640.jpg" alt="Wilderness Image">\n' +
+            '  </div>\n' +
+            '  <div class="content">\n' +
+            '    <span class="header">Dummy Marker Name 1</span>\n' +
+            '    <div class="description">\n' +
+            '      Dummy Marker Description\n' +
+            '    </div>\n' +
+            '  </div>\n' +
+            '</div>');
+        let marker2 = L.marker([40.8948932, -75.0365529], {title: 'Marker 02'}).addTo(mymap);
+        marker2.bindPopup('<div class="ui card">\n' +
+            '  <div class="image">\n' +
+            '    <img src="https://pixabay.com/get/57e6d24a4d52a414f1dc84609629317c173cd6e5524c704c7d2873d69f49cc58_640.jpg" alt="Wilderness Image">\n' +
+            '  </div>\n' +
+            '  <div class="content">\n' +
+            '    <span class="header">Dummy Marker Name 2</span>\n' +
+            '    <div class="description">\n' +
+            '      Dummy Marker Description\n' +
+            '    </div>\n' +
+            '  </div>\n' +
+            '</div>');
+        let marker3 = L.marker([41.8948932, -74.0365529], {title: 'Marker 03'}).addTo(mymap);
+        marker3.bindPopup('<div class="ui card">\n' +
+            '  <div class="image">\n' +
+            '    <img src="https://pixabay.com/get/57e6d24a4d52a414f1dc84609629317c173cd6e5524c704c7d2873d69f49cc58_640.jpg" alt="Wilderness Image">\n' +
+            '  </div>\n' +
+            '  <div class="content">\n' +
+            '    <span class="header">Dummy Marker Name 3</span>\n' +
+            '    <div class="description">\n' +
+            '      Dummy Marker Description\n' +
+            '    </div>\n' +
+            '  </div>\n' +
+            '</div>');
+        let marker4 = L.marker([42.8948932, -73.0365529], {title: 'Marker 04'}).addTo(mymap);
+        marker4.bindPopup('<div class="ui card">\n' +
+            '  <div class="image">\n' +
+            '    <img src="https://pixabay.com/get/55e2dc474c5aad14f1dc84609629317c173cd6e5524c704c7d2873d69f49cc58_640.jpg" alt="Wilderness Image">\n' +
+            '  </div>\n' +
+            '  <div class="content">\n' +
+            '    <span class="header">Dummy Marker Name 4</span>\n' +
+            '    <div class="description">\n' +
+            '      Dummy Marker Description\n' +
+            '    </div>\n' +
+            '  </div>\n' +
+            '</div>');
     </script>
 @endsection

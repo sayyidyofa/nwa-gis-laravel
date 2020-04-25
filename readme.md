@@ -14,6 +14,7 @@
     - Set Database(MySQL) username, password 
     - Set Database(MySQL) schema name: `nwagis`
     - Set MailTrap username, password
+    - Set [Pixabay](https://pixabay.com/api/docs/) API Key
 - Set up schema `nwagis` in your MySQL database
 - `php artisan migrate:fresh --seed`
 - Good to go.
