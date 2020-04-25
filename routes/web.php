@@ -58,3 +58,6 @@ Route::get('/gis/import', 'Dashboard\HomeController@importForm')->name('gis.impo
 Route::post('/gis/import', 'Resource\GISController@import')->name('gis.import');
 //Route::get('/geometry/convert', 'Resource\GeometryController@convert')->name('geometry.convert');
 Route::get('/geometry/{id}', 'Resource\GISController@show')->name('gis.show');
+
+// Dummy Images
+Route::get('/dummy-images/{perPage}', 'Front\FrontController@getImageUrls')->name('dummy-images');

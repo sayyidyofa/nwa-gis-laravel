@@ -314,16 +314,17 @@
 
         function getPopupContent(field){
             return `
-    <table>
-      <tr>
-        <th>Wliderness Name</th>
-        <td>${field.wildernessName}</td>
-      </tr>
-      <tr>
-        <th>Boundary Status</th>
-        <td>${field.boundaryStatus}</td>
-      </tr>
-    </table>
+<div class="ui card">
+  <div class="image" id="${field.w_id}">
+    <img src="${field.img_url}" alt="Wilderness Image">
+  </div>
+  <div class="content">
+    <span class="header">${field.wildernessName}</span>
+    <div class="description">
+      Status:&nbsp;${field.boundaryStatus}
+    </div>
+  </div>
+</div>
   `
         }
 
@@ -448,6 +449,14 @@
             }
         };
 
+        let dummyImages = [];
+        let idx = 0;
+
+        $.ajax({
+            url: "{{ route('dummy-images', ['perPage' => \App\GIS::all()->count()]) }}",
+            success: (data) => {dummyImages = JSON.parse(data);}
+        });
+
         loadDataWithPopup({
             url: '/gisdata',
             message: 'Loading GIS data...',
@@ -467,7 +476,8 @@
                                         wildernessName: item["name"],
                                         boundaryStatus: item.boundary_status,
                                         w_id : item.g_id,
-                                        g_id: item.g_id
+                                        g_id: item.g_id,
+                                        img_url: dummyImages[idx]
                                     }
                                 },
                                 geometry: {
@@ -476,6 +486,7 @@
                                 }
                             });
                         }
+                        idx++;
                     } catch (e) {
                         console.log(e)
                     }

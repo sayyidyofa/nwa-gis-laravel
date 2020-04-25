@@ -56,11 +56,12 @@
             }
         });
     });
-    $('.delete-confirm').on('click', function(e) {
-        e.preventDefault();
-        const url = $(this).attr('href');
+
+    function deleteHandler(event, url) {
+        event.preventDefault();
+        //const url = $(this).attr('href');
         //console.log(url);
-        let id = $(this).data("id");
+        //let id = $(this).data("id");
         let token = $("meta[name='csrf-token']").attr("content");
 
         Swal.fire({
@@ -77,7 +78,50 @@
                 $.ajax({
                     url: url,
                     type: "POST",
-                    data: {"id":id, "_method":"DELETE", "_token":token},
+                    data: {_method:"DELETE", _token:token},
+                    success: function(result) {console.log(result)},
+                    error: (jqXHR) => {console.log(jqXHR.responseText)}
+                });
+                Swal.fire(
+                    "Deleted!",
+                    "Data has been deleted.",
+                    "success"
+                ).then(() => {
+                    location.reload();
+                });
+            }
+            else if (result.dismiss === Swal.DismissReason.cancel) {
+                Swal.fire(
+                    "Cancelled",
+                    "Your data is safe :)",
+                    "error"
+                )
+            }
+        })
+    }
+
+    $('.delete-confirm').on('click', function(e) {
+        e.preventDefault();
+        const url = $(this).attr('href');
+        //console.log(url);
+        //let id = $(this).data("id");
+        let token = $("meta[name='csrf-token']").attr("content");
+
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#dd3333",
+            cancelButtonColor: "#3085d6",
+            confirmButtonText: 'Yes, delete it!',
+            cancelButtonText: 'No, cancel!'
+        }).then((result) => {
+            if (result.value) {
+                $.ajax({
+                    url: url,
+                    type: "POST",
+                    data: {_method:"DELETE", _token:token},
                     success: function(result) {console.log(result)},
                     error: (jqXHR) => {console.log(jqXHR.responseText)}
                 });

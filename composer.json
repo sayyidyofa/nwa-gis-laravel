@@ -13,6 +13,7 @@
         "ext-pdo": "*",
         "brick/geo": "^0.2.6",
         "fideloper/proxy": "^4.0",
+        "guzzlehttp/guzzle": "^6.5",
         "guzzlehttp/psr7": "^1.6",
         "laravel/framework": "5.8.*",
         "laravel/helpers": "^1.2",
