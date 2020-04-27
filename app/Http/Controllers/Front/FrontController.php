@@ -22,7 +22,7 @@ class FrontController extends Controller
         $client = new HttpClient();
         $response = $client->request('GET', $baseUrl, [
             'query' => [
-                'key' => env('PIXABAY_KEY'),
+                'key' => config('app.pixabay_key'),
                 'q' => 'forest',
                 'image_type' => 'photo',
                 'orientation' => 'horizontal',
