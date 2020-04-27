@@ -22,21 +22,19 @@ class WildernessController extends Controller
 
     public function store(Request $request)
     {
-        /*$request->validate([
-            'name' => ['required', 'string'],
-            'boundary_status' => ['required', 'string']
-        ]);*/
         try {
             $wilderness = new Wilderness;
             $wilderness->name = $request->name;
             $wilderness->boundary_status = $request->boundary_status;
             $wilderness->color = $request->color;
             $wilderness->save();
+            \Session::flash('flash', json_encode(__('messages.success-create', ['model'=>'Wilderness'])));
+            return response()->redirectToRoute('wilderness.index');
         }
         catch (\Exception $exception) {
-            dd($exception);
+            \Session::flash('flash', json_encode(__('messages.error', ['model'=>'Wilderness', 'code'=>$exception->getCode()])));
+            return redirect()->back();
         }
-        return response()->view('content.dashboard.gis.create');
     }
 
     public function edit(int $id)
@@ -47,17 +45,24 @@ class WildernessController extends Controller
 
     public function update(Request $request, int $id)
     {
-        $w = Wilderness::findOrFail($id);
-        $w->name = $request->get('name');
-        $w->boundary_status = $request->get('boundary_status');
-        $w->save();
-        return \redirect()->back();
+        try {
+            $w = Wilderness::findOrFail($id);
+            $w->name = $request->get('name');
+            $w->boundary_status = $request->get('boundary_status');
+            $w->save();
+            \Session::flash('flash', json_encode(__('messages.success-update', ['model'=>'Wilderness'])));
+            return response()->redirectToRoute('dashboard.gisindex');
+        } catch (\Exception $exception) {
+            \Session::flash('flash', json_encode(__('messages.error', ['model'=>'Wilderness', 'code'=>$exception->getCode()])));
+            return redirect()->back();
+        }
     }
 
     public function destroy(int $id)
     {
         try {
-            return Wilderness::findOrFail($id)->delete();
+            Wilderness::findOrFail($id)->delete();
+            return response('success');
         } catch (\Exception $e) {
             return response('error', 404);
         }

@@ -24,7 +24,6 @@
 
 </head>
 <body>
-
 @include('layouts.partials.navbar')
 @include('layouts.partials.sidebar')
 <div style="margin-left: 140px; margin-top: 60px">
@@ -167,6 +166,28 @@
                 )
             }
         })
+    });
+    $(()=>{
+        try {
+            let flash = JSON.parse('{!! Session::get('flash') !!}');
+
+            let errorProp = {
+                title: 'Error!',
+                class: 'error',
+                message: flash.message
+            };
+            let successProp = {
+                title: 'Success',
+                class: 'success',
+                message: flash.message
+            };
+
+            if (Object.keys(flash).length > 0 && flash.constructor === Object) {
+                $('body').toast(flash.status === 'success' ? successProp : errorProp);
+            }
+        } catch (e) {
+            console.log(e)
+        }
     });
 </script>
 
