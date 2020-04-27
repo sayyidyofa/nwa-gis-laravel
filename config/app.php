@@ -134,6 +134,8 @@ return [
     |
     */
 
+    'pixabay_key' => env('PIXABAY_KEY'),
+
     'providers' => [
 
         /*
