@@ -69,6 +69,7 @@ jobs:
             echo -e 'QUEUE_CONNECTION=sync' >> .env
             echo -e 'SESSION_DRIVER=file' >> .env
             echo -e 'SESSION_LIFETIME=120' >> .env
+            echo -e 'PIXABAY_KEY="'${PIXABAY_KEY}'"' >> .env
 
       # Create rsync exclude list
       - run:
