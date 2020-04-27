@@ -167,11 +167,25 @@
         });
 
         // Add 5 random markers
-        var marker = L.marker(centerView, {title: 'Dummy Marker 0'}).addTo(mymap);
-        marker.bindPopup(`
+        let bruh = [];
+        $.ajax({
+            url: "{{ route('dummy-images', ['perPage' => \App\GIS::all()->count()]) }}",
+            success: (data) => {
+                bruh.push(JSON.parse(data));
+                console.log(bruh);
+                let marker = L.marker(centerView, {title: 'Dummy Marker 0'}).addTo(mymap);
+
+                let marker1 = L.marker([39.8948932, -76.0365529], {title: 'Marker 01'}).addTo(mymap);
+
+                let marker2 = L.marker([40.8948932, -75.0365529], {title: 'Marker 02'}).addTo(mymap);
+
+                let marker3 = L.marker([41.8948932, -74.0365529], {title: 'Marker 03'}).addTo(mymap);
+
+                let marker4 = L.marker([42.8948932, -73.0365529], {title: 'Marker 04'}).addTo(mymap);
+                marker.bindPopup(`
 <div class="ui card">
   <div class="image">
-    <img src="${dummyImages[0]}" alt="Wilderness Image">
+    <img src="${bruh[0][0]}" alt="Wilderness Image">
   </div>
   <div class="content">
     <span class="header">Dummy Marker Name 0</span>
@@ -181,12 +195,10 @@
   </div>
 </div>
             `);
-
-        let marker1 = L.marker([39.8948932, -76.0365529], {title: 'Marker 01'}).addTo(mymap);
-        marker1.bindPopup(`
+                marker1.bindPopup(`
 <div class="ui card">
   <div class="image">
-    <img src="${dummyImages[1]}" alt="Wilderness Image">
+    <img src="${bruh[0][1]}" alt="Wilderness Image">
   </div>
   <div class="content">
     <span class="header">Dummy Marker Name 1</span>
@@ -196,11 +208,10 @@
   </div>
 </div>
             `);
-        let marker2 = L.marker([40.8948932, -75.0365529], {title: 'Marker 02'}).addTo(mymap);
-        marker2.bindPopup(`
+                marker2.bindPopup(`
 <div class="ui card">
   <div class="image">
-    <img src="${dummyImages[2]}" alt="Wilderness Image">
+    <img src="${bruh[0][2]}" alt="Wilderness Image">
   </div>
   <div class="content">
     <span class="header">Dummy Marker Name 2</span>
@@ -210,11 +221,10 @@
   </div>
 </div>
             `);
-        let marker3 = L.marker([41.8948932, -74.0365529], {title: 'Marker 03'}).addTo(mymap);
-        marker3.bindPopup(`
+                marker3.bindPopup(`
 <div class="ui card">
   <div class="image">
-    <img src="${dummyImages[3]}" alt="Wilderness Image">
+    <img src="${bruh[0][3]}" alt="Wilderness Image">
   </div>
   <div class="content">
     <span class="header">Dummy Marker Name 3</span>
@@ -224,11 +234,10 @@
   </div>
 </div>
             `);
-        let marker4 = L.marker([42.8948932, -73.0365529], {title: 'Marker 04'}).addTo(mymap);
-        marker4.bindPopup(`
+                marker4.bindPopup(`
 <div class="ui card">
   <div class="image">
-    <img src="${dummyImages[4]}" alt="Wilderness Image">
+    <img src="${bruh[0][4]}" alt="Wilderness Image">
   </div>
   <div class="content">
     <span class="header">Dummy Marker Name 4</span>
@@ -238,5 +247,10 @@
   </div>
 </div>
             `);
+            }
+        });
+        //console.log(bruh);
+
+
     </script>
 @endsection
