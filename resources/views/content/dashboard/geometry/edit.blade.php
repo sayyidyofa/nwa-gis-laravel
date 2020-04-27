@@ -32,9 +32,9 @@
 
 @section('inline_js')
     <script>
-        let geoJSONObj = wkx.Geometry.parse(new buffer.Buffer('{{ $c }}', 'hex')).toGeoJSON();
+        let Coordinates = JSON.parse('{{ $c }}');// wkx.Geometry.parse(new buffer.Buffer('{{ $c }}', 'hex')).toGeoJSON();
         let geotype = '{{ $t }}';
-        let points = geotype === 'MultiPolygon' ? geoJSONObj.coordinates[0][0] : geoJSONObj.coordinates[0];
+        let points = geotype === 'MultiPolygon' ? Coordinates[0][0] : Coordinates[0];
         let panjang = points.length;
         let fieldsTemplate = (point_id, coord_x, coord_y) => `
                 <tr class="center aligned">
@@ -102,7 +102,12 @@
         $('#edit-btn').on('click', (e) => {
             e.preventDefault();
             updatePoints();
-            geoJSONObj.coordinates[0] = points;
+
+            for (let idx = 0;idx<points.length;idx++) {
+                points[idx][0] = Number(points[idx][0]);
+                points[idx][1] = Number(points[idx][1]);
+            }
+            Coordinates = geotype === 'MultiPolygon' ? [[points]]: [points] ;
             $.ajax({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -112,7 +117,7 @@
                 cache: false,
                 data: {
                     _method: "PUT",
-                    coordinates: buf2hex(wkx.Geometry.parseGeoJSON(geoJSONObj).toWkb().buffer).toUpperCase()
+                    coordinates: JSON.stringify(Coordinates) //buf2hex(wkx.Geometry.parseGeoJSON(Coordinates).toWkb().buffer).toUpperCase()
                 },
                 error: function (xhr, status, error) {
                     console.log(xhr.responseText);
