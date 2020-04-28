@@ -48,9 +48,9 @@ class GISController extends Controller
         return response('success');
     }
 
-    public function show($id) {
+    /*public function show($id) {
         return view('content.dashboard.gis.map', compact('id'));
-    }
+    }*/
 
     public function export() {
         //$gis_all = GIS::all();

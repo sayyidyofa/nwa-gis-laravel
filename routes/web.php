@@ -20,7 +20,7 @@ Route::namespace('Front')->group(function () {
 });
 
 // Auth
-Route::auth(['register'=>false]); // No user registration allowed except by Admin or Sadmin
+Route::auth(['register' => false, 'reset' => false, 'verify' => false]); // No user registration allowed except by Admin or Sadmin
 Route::get('/logout', 'Auth\LoginController@logout')->name('logout');
 
 // Dashboard
@@ -57,7 +57,7 @@ Route::get('/gis/export','Resource\GISController@export')->name('gis.export');
 Route::get('/gis/import', 'Dashboard\HomeController@importForm')->name('gis.importForm');
 Route::post('/gis/import', 'Resource\GISController@import')->name('gis.import');
 //Route::get('/geometry/convert', 'Resource\GeometryController@convert')->name('geometry.convert');
-Route::get('/geometry/{id}', 'Resource\GISController@show')->name('gis.show');
+//Route::get('/geometry/{id}', 'Resource\GISController@show')->name('gis.show');
 
 // Dummy Images
 Route::get('/dummy-images/{perPage}', 'Front\FrontController@getImageUrls')->name('dummy-images');

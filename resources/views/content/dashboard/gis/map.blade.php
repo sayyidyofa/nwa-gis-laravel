@@ -58,6 +58,52 @@
             title: "U.S Forest Department Office"
         }).addTo(mymap);
 
+        var getCentroid = function (arr) {
+            var twoTimesSignedArea = 0;
+            var cxTimes6SignedArea = 0;
+            var cyTimes6SignedArea = 0;
+
+            var length = arr.length;
+
+            var x = function (i) { return arr[i % length][0] };
+            var y = function (i) { return arr[i % length][1] };
+
+            for ( var i = 0; i < arr.length; i++) {
+                var twoSA = x(i)*y(i+1) - x(i+1)*y(i);
+                twoTimesSignedArea += twoSA;
+                cxTimes6SignedArea += (x(i) + x(i+1)) * twoSA;
+                cyTimes6SignedArea += (y(i) + y(i+1)) * twoSA;
+            }
+            var sixSignedArea = 3 * twoTimesSignedArea;
+            return [ cxTimes6SignedArea / sixSignedArea, cyTimes6SignedArea / sixSignedArea];
+        };
+
+        let lineCenterPoint = (array) => {
+            let x1, x2, y1, y2;
+            x1 = array[0][0];
+            x2 = array[1][0];
+            y1 = array[0][1];
+            y2 = array[1][1];
+            let retArr = [];
+            retArr.push((x1+x2)/2);
+            retArr.push((y1+y2)/2);
+            return retArr;
+        };
+
+        let getGeoCenterPoint = (array, type) => {
+            array = JSON.parse(array);
+            if (type === 'MultiPolygon') {
+                let temp = [];
+                array.forEach((item, index) => {
+                    temp.push(getCentroid(item[0]));
+                });
+                if (temp.length === 1) return temp[0];
+                else if(temp.length === 2) return lineCenterPoint(temp);
+                else return getCentroid(temp);
+            }
+            else return getCentroid(array[0]);
+        };
+
         function onMapClick(e) {
             if(!drawingState) return;
 
@@ -173,6 +219,7 @@
 
         let dummyImages = [];
         let idx = 0;
+        let geoWithCentroids = [];
 
         $.ajax({
             url: "{{ route('dummy-images', ['perPage' => \App\GIS::all()->count()]) }}",
@@ -184,7 +231,6 @@
             message: 'Loading GIS data...',
             callback: (data) => {
                 let field_response = {type: "FeatureCollection", features: []};
-
                 data.forEach((item, index) => {
                     try {
                         //console.log(item.color);
@@ -213,10 +259,18 @@
                                     coordinates: JSON.parse(item.coordinates)
                                 }
                             });
+                            geoWithCentroids.push({
+                                g_id: item.g_id,
+                                centroid: getGeoCenterPoint(item.coordinates, item.geotype)
+                            });
                         }
+                        //let y = L.polygon(field_response.features[idx].coordinates);
+                        //let coba = item.geotype === 'MutliPolygon' ? JSON.parse(item.coordinates)[0][0] : JSON.parse(item.coordinates)[0];
+                        //console.log(getGeoCenterPoint(item.coordinates, item.geotype));
+                        //console.log(getCentroid2(coba));
                         idx++;
                     } catch (e) {
-                        console.log(e)
+                        //console.log(e)
                     }
 
                 });
@@ -226,8 +280,16 @@
                     },
                     onEachFeature: onEachFeatureCallback
                 }).addTo(mymap);
+                /*let the_g_id;
+                try {
+                    the_g_id = '$id'; //change this of want to use
+                    let isCorrectId = (geoWithCentroidObj) => {
+                        return geoWithCentroidObj.g_id === the_g_id;
+                    };
+                    let aaa = geoWithCentroids.find(o => o.g_id = the_g_id);
+                    mymap.setView(aaa.centroid, 7);
+                } catch (e) {}*/
             }
         });
-
     </script>
 @endsection
