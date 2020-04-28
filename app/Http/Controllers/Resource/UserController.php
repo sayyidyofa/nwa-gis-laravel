@@ -55,7 +55,7 @@ class UserController extends Controller
             return response()->redirectToRoute('user.index');
         } catch (\Exception $exception) {
             \Session::flash('flash', json_encode(__('messages.error', ['model'=>'User', 'code'=>$exception->getCode()])));
-            return redirect()->back();
+            return response()->redirectToRoute('user.create');
         }
     }
 
@@ -82,7 +82,7 @@ class UserController extends Controller
             return response()->redirectToRoute('user.index');
         } catch (\Exception $exception) {
             \Session::flash('flash', json_encode(__('messages.error', ['model'=>'User', 'code'=>$exception->getCode()])));
-            return redirect()->back();
+            return response()->redirectToRoute('user.edit', ['id' => $id]);
         }
 
     }

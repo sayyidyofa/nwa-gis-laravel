@@ -31,7 +31,7 @@ class GeometryController extends Controller
             return response()->redirectToRoute('dashboard.gisindex');
         } catch (\Exception $exception) {
             \Session::flash('flash', json_encode(__('messages.error', ['model'=>'Geometry', 'code'=>$exception->getCode()])));
-            return redirect()->back();
+            return response()->redirectToRoute('geometry.addgeometry', ['id' => $request->wilderness_id]);
         }
     }
 
@@ -55,7 +55,7 @@ class GeometryController extends Controller
             return response()->redirectToRoute('dashboard.gisindex');
         } catch (\Exception $exception) {
             \Session::flash('flash', json_encode(__('messages.error', ['model'=>'Geometry', 'code'=>$exception->getCode()])));
-            return redirect()->back();
+            return response()->redirectToRoute('geometry.edit', ['id' => $id]);
         }
 
     }

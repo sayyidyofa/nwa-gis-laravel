@@ -29,11 +29,12 @@ class WildernessController extends Controller
             $wilderness->color = $request->color;
             $wilderness->save();
             \Session::flash('flash', json_encode(__('messages.success-create', ['model'=>'Wilderness'])));
-            return response()->redirectToRoute('wilderness.index');
+            return response()->redirectToRoute('dashboard.gisindex');
         }
         catch (\Exception $exception) {
+            dd($exception);
             \Session::flash('flash', json_encode(__('messages.error', ['model'=>'Wilderness', 'code'=>$exception->getCode()])));
-            return redirect()->back();
+            return response()->redirectToRoute('wilderness.create');
         }
     }
 
@@ -54,7 +55,7 @@ class WildernessController extends Controller
             return response()->redirectToRoute('dashboard.gisindex');
         } catch (\Exception $exception) {
             \Session::flash('flash', json_encode(__('messages.error', ['model'=>'Wilderness', 'code'=>$exception->getCode()])));
-            return redirect()->back();
+            return response()->redirectToRoute('wilderness.edit', ['id', $id]);
         }
     }
 
