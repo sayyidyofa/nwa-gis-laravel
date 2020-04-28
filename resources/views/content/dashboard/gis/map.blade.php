@@ -11,7 +11,8 @@
 
 @section('content')
     <h1>Map</h1>
-    <div id="map" style="width: 1200px; height: 400px;"></div>
+    <h3>Map filled with {{ \App\GIS::all()->count() }} geodatas and popup actions</h3>
+    <div id="map" style="width: 1300px; height: 600px;"></div>
 @endsection
 
 @section('plugin_js')
@@ -249,7 +250,7 @@
                                     popupContent: {
                                         wildernessName: item["name"],
                                         boundaryStatus: item.boundary_status,
-                                        w_id : item.g_id,
+                                        w_id : item.w_id,
                                         g_id: item.g_id,
                                         img_url: dummyImages[idx]
                                     }
