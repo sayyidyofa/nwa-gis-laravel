@@ -411,7 +411,7 @@
                     wilderness_id: '{{$w->id}}',
                     geotype: 'Polygon',
                     // https://stackoverflow.com/questions/40031688/javascript-arraybuffer-to-hex
-                    coordinates: buf2hex(wkx.Geometry.parseGeoJSON({type:'Polygon', coordinates: polygonGeoJSON.geometry.coordinates}).toWkb().buffer).toUpperCase()
+                    coordinates: JSON.stringify(polygonGeoJSON.geometry.coordinates) //buf2hex(wkx.Geometry.parseGeoJSON({type:'Polygon', coordinates: polygonGeoJSON.geometry.coordinates}).toWkb().buffer).toUpperCase()
                 },
                 error: function (xhr, status, error) {
                     console.log(xhr.responseText);

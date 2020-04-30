@@ -62,25 +62,13 @@
 @section('inline_js')
     <script>
         var centerView = [38.8948932, -77.0365529];
-        var mymap = L.map('map').setView(centerView, 13);
+        var mymap = L.map('map').setView(centerView, 5);
         L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
             attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
             maxZoom: 20,
             id: 'mapbox/satellite-v9',
             accessToken: 'pk.eyJ1Ijoic2F5eWlkeW9mYSIsImEiOiJjazdvaHVyanUwNmF3M2dxbnMzaHJqd2hmIn0.eurgCqMjF3XR7m0oZ1Ludw'
         }).addTo(mymap);
-        var marker = L.marker(centerView, {title: 'Dummy Marker 0'}).addTo(mymap);
-        marker.bindPopup('<div class="ui card">\n' +
-            '  <div class="image">\n' +
-            '    <img src="https://pixabay.com/get/57e6d24a4d52a414f1dc84609629317c173cd6e5524c704c7d2873d69f49cc58_640.jpg" alt="Wilderness Image">\n' +
-            '  </div>\n' +
-            '  <div class="content">\n' +
-            '    <span class="header">Dummy Marker Name 0</span>\n' +
-            '    <div class="description">\n' +
-            '      Dummy Marker Description\n' +
-            '    </div>\n' +
-            '  </div>\n' +
-            '</div>');
 
         function getPopupContent(field) {
             return `
@@ -178,55 +166,91 @@
             }
         });
 
-        // Add 4 random markers
+        // Add 5 random markers
+        let bruh = [];
+        $.ajax({
+            url: "{{ route('dummy-images', ['perPage' => \App\GIS::all()->count()]) }}",
+            success: (data) => {
+                bruh.push(JSON.parse(data));
+                console.log(bruh);
+                let marker = L.marker(centerView, {title: 'Dummy Marker 0'}).addTo(mymap);
 
-        let marker1 = L.marker([39.8948932, -76.0365529], {title: 'Marker 01'}).addTo(mymap);
-        marker1.bindPopup('<div class="ui card">\n' +
-            '  <div class="image">\n' +
-            '    <img src="https://pixabay.com/get/55e2dc474c5aad14f1dc84609629317c173cd6e5524c704c7d2873d69f49cc58_640.jpg" alt="Wilderness Image">\n' +
-            '  </div>\n' +
-            '  <div class="content">\n' +
-            '    <span class="header">Dummy Marker Name 1</span>\n' +
-            '    <div class="description">\n' +
-            '      Dummy Marker Description\n' +
-            '    </div>\n' +
-            '  </div>\n' +
-            '</div>');
-        let marker2 = L.marker([40.8948932, -75.0365529], {title: 'Marker 02'}).addTo(mymap);
-        marker2.bindPopup('<div class="ui card">\n' +
-            '  <div class="image">\n' +
-            '    <img src="https://pixabay.com/get/57e6d24a4d52a414f1dc84609629317c173cd6e5524c704c7d2873d69f49cc58_640.jpg" alt="Wilderness Image">\n' +
-            '  </div>\n' +
-            '  <div class="content">\n' +
-            '    <span class="header">Dummy Marker Name 2</span>\n' +
-            '    <div class="description">\n' +
-            '      Dummy Marker Description\n' +
-            '    </div>\n' +
-            '  </div>\n' +
-            '</div>');
-        let marker3 = L.marker([41.8948932, -74.0365529], {title: 'Marker 03'}).addTo(mymap);
-        marker3.bindPopup('<div class="ui card">\n' +
-            '  <div class="image">\n' +
-            '    <img src="https://pixabay.com/get/57e6d24a4d52a414f1dc84609629317c173cd6e5524c704c7d2873d69f49cc58_640.jpg" alt="Wilderness Image">\n' +
-            '  </div>\n' +
-            '  <div class="content">\n' +
-            '    <span class="header">Dummy Marker Name 3</span>\n' +
-            '    <div class="description">\n' +
-            '      Dummy Marker Description\n' +
-            '    </div>\n' +
-            '  </div>\n' +
-            '</div>');
-        let marker4 = L.marker([42.8948932, -73.0365529], {title: 'Marker 04'}).addTo(mymap);
-        marker4.bindPopup('<div class="ui card">\n' +
-            '  <div class="image">\n' +
-            '    <img src="https://pixabay.com/get/55e2dc474c5aad14f1dc84609629317c173cd6e5524c704c7d2873d69f49cc58_640.jpg" alt="Wilderness Image">\n' +
-            '  </div>\n' +
-            '  <div class="content">\n' +
-            '    <span class="header">Dummy Marker Name 4</span>\n' +
-            '    <div class="description">\n' +
-            '      Dummy Marker Description\n' +
-            '    </div>\n' +
-            '  </div>\n' +
-            '</div>');
+                let marker1 = L.marker([39.8948932, -76.0365529], {title: 'Marker 01'}).addTo(mymap);
+
+                let marker2 = L.marker([40.8948932, -75.0365529], {title: 'Marker 02'}).addTo(mymap);
+
+                let marker3 = L.marker([41.8948932, -74.0365529], {title: 'Marker 03'}).addTo(mymap);
+
+                let marker4 = L.marker([42.8948932, -73.0365529], {title: 'Marker 04'}).addTo(mymap);
+                marker.bindPopup(`
+<div class="ui card">
+  <div class="image">
+    <img src="${bruh[0][0]}" alt="Wilderness Image">
+  </div>
+  <div class="content">
+    <span class="header">Dummy Marker Name 0</span>
+    <div class="description">
+      Dummy Marker Description
+    </div>
+  </div>
+</div>
+            `);
+                marker1.bindPopup(`
+<div class="ui card">
+  <div class="image">
+    <img src="${bruh[0][1]}" alt="Wilderness Image">
+  </div>
+  <div class="content">
+    <span class="header">Dummy Marker Name 1</span>
+    <div class="description">
+      Dummy Marker Description
+    </div>
+  </div>
+</div>
+            `);
+                marker2.bindPopup(`
+<div class="ui card">
+  <div class="image">
+    <img src="${bruh[0][2]}" alt="Wilderness Image">
+  </div>
+  <div class="content">
+    <span class="header">Dummy Marker Name 2</span>
+    <div class="description">
+      Dummy Marker Description
+    </div>
+  </div>
+</div>
+            `);
+                marker3.bindPopup(`
+<div class="ui card">
+  <div class="image">
+    <img src="${bruh[0][3]}" alt="Wilderness Image">
+  </div>
+  <div class="content">
+    <span class="header">Dummy Marker Name 3</span>
+    <div class="description">
+      Dummy Marker Description
+    </div>
+  </div>
+</div>
+            `);
+                marker4.bindPopup(`
+<div class="ui card">
+  <div class="image">
+    <img src="${bruh[0][4]}" alt="Wilderness Image">
+  </div>
+  <div class="content">
+    <span class="header">Dummy Marker Name 4</span>
+    <div class="description">
+      Dummy Marker Description
+    </div>
+  </div>
+</div>
+            `);
+            }
+        });
+        //console.log(bruh);
+
+
     </script>
 @endsection

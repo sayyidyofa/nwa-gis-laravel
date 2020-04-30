@@ -24,7 +24,6 @@
 
 </head>
 <body>
-
 @include('layouts.partials.navbar')
 @include('layouts.partials.sidebar')
 <div style="margin-left: 140px; margin-top: 60px">
@@ -141,6 +140,54 @@
                 )
             }
         })
+    });
+
+    $('#download-gis').on('click', (e) => {
+        e.preventDefault();
+        const url = '{{ route('gis.export') }}';
+        Swal.fire({
+            title: "Warning",
+            text: "The dataset contain rows that are bigger than Ms.Excel character limit (32767). It is save to be downloaded but please make sure to check upon corrupted coordinates before importing",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#dd3333",
+            cancelButtonColor: "#3085d6",
+            confirmButtonText: 'I know what I\'m doing',
+            cancelButtonText: 'Cancel'
+        }).then((result) => {
+            if (result.value) {
+                window.location.href = url;
+            }
+            else if (result.dismiss === Swal.DismissReason.cancel) {
+                Swal.fire(
+                    "Cancelled",
+                    "The dataset will not be downloaded",
+                    "error"
+                )
+            }
+        })
+    });
+    $(()=>{
+        try {
+            let flash = JSON.parse('{!! Session::get('flash') !!}');
+
+            let errorProp = {
+                title: 'Error!',
+                class: 'error',
+                message: flash.message
+            };
+            let successProp = {
+                title: 'Success',
+                class: 'success',
+                message: flash.message
+            };
+
+            if (Object.keys(flash).length > 0 && flash.constructor === Object) {
+                $('body').toast(flash.status === 'success' ? successProp : errorProp);
+            }
+        } catch (e) {
+            console.log(e)
+        }
     });
 </script>
 

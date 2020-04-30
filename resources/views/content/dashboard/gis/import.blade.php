@@ -17,7 +17,7 @@
 @section('inline_js')
     <script>
         let callback = (value) => {
-            console.log(value);
+            //console.log(value);
             Swal.fire("OK","GIS Dataset successfully imported to database!", "success");
         };
         function alertError(e) {
@@ -30,12 +30,12 @@
         $("form").on('submit',(function(e) {
             e.preventDefault();
             $.fn.toast.settings.silent = true;
-            let myToast = $('body').toast({
+            /*let myToast = $('body').toast({
                 class: 'info',
                 title: 'Import',
                 displayTime: 0,
                 message: 'Uploading data.....'
-            });
+            });*/
             $.ajax({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -45,21 +45,29 @@
                 data: new FormData(this),
                 processData: false,
                 contentType: false,
+                statusCode: {
+                    422: jqXHR => alertError(`${jqXHR.responseText.hasOwnProperty('message')?jqXHR.responseText.message:'Error'}! ${jqXHR.responseText.hasOwnProperty('errors')?jqXHR.responseText.errors: JSON.parse(jqXHR.responseText).message}`)
+                },
                 error: (jqXHR) => {
-                    alertError(`${jqXHR.responseText.hasOwnProperty('message')?jqXHR.responseText.message:'Error'}! ${jqXHR.responseText.hasOwnProperty('errors')?jqXHR.responseText.errors: JSON.parse(jqXHR.responseText).message}`);
+                    //alert('AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA');
+                    alertError(jqXHR.responseText);
+                    //callback(jqXHR);
+                    //alertError(`${jqXHR.responseText.hasOwnProperty('message')?jqXHR.responseText.message:'Error'}! ${jqXHR.responseText.hasOwnProperty('errors')?jqXHR.responseText.errors: JSON.parse(jqXHR.responseText).message}`);
                     //console.log(jqXHR.responseText);
-                    myToast.toast('close',{silent: true})},
+                    //myToast.toast('close',{silent: true})
+                },
                 success: (data) => {
-
-                    myToast.toast('close');
+                    //alert('bbbbb');
+                    /*myToast.toast('close');
                     $('body').toast({
                         class: 'info',
                         title: 'Import',
                         message: 'Data upload complete!',
                         showProgress: 'bottom'
-                    });
-                    if (typeof callback === 'function')
-                        callback(data);
+                    });*/
+                    //let jqXHR = data;
+                    //if (data.status !== 200) alertError(`${jqXHR.responseText.hasOwnProperty('message')?jqXHR.responseText.message:'Error'}! ${jqXHR.responseText.hasOwnProperty('errors')?jqXHR.responseText.errors: JSON.parse(jqXHR.responseText).message}`);
+                    callback(data);
                 }
             });
             $('form').trigger('reset');

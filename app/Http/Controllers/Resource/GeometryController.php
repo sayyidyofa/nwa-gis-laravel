@@ -21,12 +21,18 @@ class GeometryController extends Controller
     }
 
     public function store(Request $request) {
-        (new Geometry([
-            'geotype' => $request->geotype,
-            'coordinates' => $request->coordinates,
-            'wildernesses_id' => $request->wilderness_id
-        ]))->save();
-        return response('success');
+        try {
+            (new Geometry([
+                'geotype' => $request->geotype,
+                'coordinates' => $request->coordinates,
+                'wildernesses_id' => $request->wilderness_id
+            ]))->save();
+            \Session::flash('flash', json_encode(__('messages.success-create', ['model'=>'Geometry'])));
+            return response()->redirectToRoute('dashboard.gisindex');
+        } catch (\Exception $exception) {
+            \Session::flash('flash', json_encode(__('messages.error', ['model'=>'Geometry', 'code'=>$exception->getCode()])));
+            return response()->redirectToRoute('geometry.addgeometry', ['id' => $request->wilderness_id]);
+        }
     }
 
     public function edit(int $id)
@@ -39,18 +45,26 @@ class GeometryController extends Controller
 
     public function update(Request $request, int $id)
     {
-        $geometry = Geometry::findOrFail($id);
-        $geometry->geotype = $request->geotype ?? $geometry->geotype;
-        $geometry->coordinates = $request->coordinates;
-        $geometry->wildernesses_id = $request->wildernesses_id ?? $geometry->wildernesses_id;
-        $geometry->save();
-        return response('success');
+        try {
+            $geometry = Geometry::findOrFail($id);
+            $geometry->geotype = $request->geotype ?? $geometry->geotype;
+            $geometry->coordinates = $request->coordinates;
+            $geometry->wildernesses_id = $request->wildernesses_id ?? $geometry->wildernesses_id;
+            $geometry->save();
+            \Session::flash('flash', json_encode(__('messages.success-update', ['model'=>'Geometry'])));
+            return response()->redirectToRoute('dashboard.gisindex');
+        } catch (\Exception $exception) {
+            \Session::flash('flash', json_encode(__('messages.error', ['model'=>'Geometry', 'code'=>$exception->getCode()])));
+            return response()->redirectToRoute('geometry.edit', ['id' => $id]);
+        }
+
     }
 
     public function destroy(int $id)
     {
         try {
-            return Geometry::findOrFail($id)->delete();
+            Geometry::findOrFail($id)->delete();
+            return response('success');
         } catch (\Exception $e) {
             return response('error', 404);
         }

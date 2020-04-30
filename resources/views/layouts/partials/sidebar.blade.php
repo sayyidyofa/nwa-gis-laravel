@@ -32,7 +32,7 @@
         <i class="upload icon"></i>
         Import GIS<br> Dataset
     </a>
-    <a href="{{ route('gis.export') }}" class="link item">
+    <a href="{{ route('gis.export') }}" class="link item" id="download-gis">
         <i class="download icon"></i>
         Export GIS<br> Dataset
     </a>

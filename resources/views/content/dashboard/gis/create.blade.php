@@ -171,7 +171,7 @@
         }
 
         function centerizeView(){
-            let zoomLevel = 17;
+            let zoomLevel = 5;
             zoomLevel = mymap.getZoom() < zoomLevel ? zoomLevel : mymap.getZoom();
 
             mymap.setView(

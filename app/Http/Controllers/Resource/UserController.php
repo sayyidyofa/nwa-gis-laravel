@@ -42,15 +42,21 @@ class UserController extends Controller
 
     public function store(Request $request)
     {
-        $role = Role::findByName($request->get('role') ?? 'user');
-        $user = new User([
-            'name' => $request->get('name'),
-            'email' => $request->get('email'),
-            'password' => bcrypt($request->get('password'))
-        ]);
-        $user->assignRole($role);
-        $user->save();
-        return response()->redirectTo('/user');
+        try {
+            $role = Role::findByName($request->get('role') ?? 'user');
+            $user = new User([
+                'name' => $request->get('name'),
+                'email' => $request->get('email'),
+                'password' => bcrypt($request->get('password'))
+            ]);
+            $user->assignRole($role);
+            $user->save();
+            \Session::flash('flash', json_encode(__('messages.success-create', ['model'=>'User'])));
+            return response()->redirectToRoute('user.index');
+        } catch (\Exception $exception) {
+            \Session::flash('flash', json_encode(__('messages.error', ['model'=>'User', 'code'=>$exception->getCode()])));
+            return response()->redirectToRoute('user.create');
+        }
     }
 
     public function show(int $id)
@@ -66,21 +72,28 @@ class UserController extends Controller
 
     public function update(Request $request, int $id)
     {
-        $user = User::findOrFail($id);
-        $user->name = $request->get('name');
-        $user->email = $request->get('email');
-        $user->password = $request->get('password') ?? $user->password;
-        $user->save();
-        return response()->redirectTo('/user');
+        try {
+            $user = User::findOrFail($id);
+            $user->name = $request->get('name');
+            $user->email = $request->get('email');
+            $user->password = $request->get('password') ?? $user->password;
+            $user->save();
+            \Session::flash('flash', json_encode(__('messages.success-update', ['model'=>'User'])));
+            return response()->redirectToRoute('user.index');
+        } catch (\Exception $exception) {
+            \Session::flash('flash', json_encode(__('messages.error', ['model'=>'User', 'code'=>$exception->getCode()])));
+            return response()->redirectToRoute('user.edit', ['id' => $id]);
+        }
+
     }
 
     public function destroy(int $id)
     {
         try {
             User::findOrFail($id)->delete();
+            return response('success');
         } catch (\Exception $e) {
-            dd('User not found');
+            return response('User not found', 400);
         }
-        return response()->redirectTo('/user');
     }
 }

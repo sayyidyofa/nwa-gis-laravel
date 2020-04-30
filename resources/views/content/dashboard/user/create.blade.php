@@ -1,7 +1,7 @@
 @extends('layouts.dashboard')
 
 @section('content')
-    <h3>Buat Jadwal Baru</h3>
+    <h3>Register New User</h3>
     <form action="{{ route('user.store') }}" method="post" class="ui form" id="create_jadwal">
         {{ csrf_field() }}
         <div class="field">

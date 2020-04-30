@@ -48,9 +48,9 @@ class GISController extends Controller
         return response('success');
     }
 
-    public function show($id) {
+    /*public function show($id) {
         return view('content.dashboard.gis.map', compact('id'));
-    }
+    }*/
 
     public function export() {
         //$gis_all = GIS::all();
@@ -64,29 +64,31 @@ class GISController extends Controller
         ], ['Uploaded file is not a correct dataset file']);
         $file = $request->file('file');
         $old_w_data = null;
+        $indexes = [];
         try {
             $old_w_data = Wilderness::all();
-            Session::put('begin_w_id', Wilderness::latest()->first()->id + 1); // https://stackoverflow.com/questions/53503525/laravel-5-6-global-and-dynamic-variable
             (new WildernessesImport)->import($file->getPathName());
+            $indexes = Wilderness::all()->diff($old_w_data)->pluck('id')->toArray();
         } catch(\Exception $exception) {
             (new WildernessesImport)->import($file->getPathName());
-            Session::put('begin_w_id', Wilderness::orderBy('id')->first()->id);
         }
 
         try {
             (new GeometriesImport)->import($file->getPathName());
         } catch (\Exception $exception) {
+            debug($exception->getTrace());
             if (isset($old_w_data) && $old_w_data->isNotEmpty()) { // https://stackoverflow.com/questions/20563166/eloquent-collection-counting-and-detect-empty
-                $last_id = Wilderness::latest()->first()->id; // https://laracasts.com/discuss/channels/laravel/how-to-get-last-id-in-laravel
-                for ($idx = $old_w_data->last()->id + 1; $idx <= $last_id; $idx++) {
-                    Wilderness::findOrFail($idx)->delete();
+                foreach ($indexes as $index) {
+                    Wilderness::findOrFail($index)->delete();
                 }
+//                }
             } else {
                 // https://stackoverflow.com/questions/29119272/laravel-eloquent-truncate-foreign-key-constraint
                 Schema::disableForeignKeyConstraints();
                 Wilderness::truncate(); // https://stackoverflow.com/questions/15484404/how-to-delete-all-the-rows-in-a-table-using-eloquent
                 Schema::enableForeignKeyConstraints();
             }
+            debug($exception->getTrace());
             if ($exception instanceof QueryException)
                 return response('Your uploaded dataset conflicts with current database! Try removing the WILDERNESS_ID column and import again', 422);
             else

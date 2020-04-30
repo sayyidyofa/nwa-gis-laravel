@@ -24,13 +24,14 @@ class LoginController extends Controller
     /**
      * Where to redirect users after login.
      *
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @return string
      * @var string
      */
-    protected $redirectTo = '/dashboard';
-    /*protected function redirectTo() {
-        return redirect('/dashboard')->with(['notif' => 'Login berhasil']);
-    }*/
+    //protected $redirectTo = '/dashboard';
+    protected function redirectTo() {
+        \Session::flash('flash', json_encode(__('messages.success-login')));
+        return '/dashboard';
+    }
 
     /**
      * Create a new controller instance.
