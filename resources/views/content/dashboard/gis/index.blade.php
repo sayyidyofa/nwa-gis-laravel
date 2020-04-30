@@ -11,7 +11,7 @@
             <th>Name</th>
             <th>Boundary Status</th>
             <th>GeoType</th>
-            <th>Coordinates</th>
+            <!-- <th>Coordinates</th> -->
             <th>Action</th>
         </tr>
         @foreach($geodata as $data)
@@ -21,12 +21,12 @@
                 <td>{{ $data->name }}</td>
                 <td>{{ $data->boundary_status }}</td>
                 <td>{{ $data->geotype }}</td>
-                <td>
+                <!-- <td>
                     @isset($data->g_id)
-                        <a href="{{ route('gis.show', ['id' => $data->g_id]) }}">Show on Map</a>
+                        <a href="/dashboard/{{$data->g_id}}/map">Show on Map</a>
                         {{--Data is big. <a href="/geometry/{{$data->g_id}}/coordinates">Show WKB dump</a>--}}
                     @endisset
-                </td>
+                </td> -->
                 <td>@empty($data->g_id)
                         <a href="/wilderness/{{ $data->w_id }}/addgeometry" data-tooltip="Add Geometry Data to Wilderness Data"><i class="map outline icon"></i></a>&nbsp;|&nbsp;
                     @endempty
