@@ -1,5 +1,6 @@
 # National Wilderness Areas Grapichal Information System
 [![Circle CI](https://circleci.com/gh/sayyidyofa/nwa-gis-laravel.svg?style=svg)](https://circleci.com/gh/sayyidyofa/nwa-gis-laravel)
+[![HitCount](http://hits.dwyl.com/sayyidyofa/nwa-gis-laravel.svg)](http://hits.dwyl.com/sayyidyofa/nwa-gis-laravel)
 
 Geographic Information System using Laravel Framework
 
