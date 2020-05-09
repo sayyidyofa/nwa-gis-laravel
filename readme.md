@@ -7,6 +7,9 @@
 2. CartoDB Site: [CartoDB](https://sayyidyofa.carto.com/builder/85da0184-1639-4f01-9f17-b268bac6da20/embed)
 3. LeafletJS [docs](https://leafletjs.com/reference-1.6.0.html)
 
+### Demo
+https://nwagis.projects.lazydev.me
+
 ### Development (First time)
 - `composer install`
 - Set up `.env` file:
@@ -31,12 +34,4 @@ This is generated via `database/seeds/UserSeeder`
 | admin@example.com  | secret   | admin  |
 | sadmin@example.com | secret   | sadmin |
 
-### To-Do
-To-Dos, issues and feature requests has been moved to [issues](https://github.com/sayyidyofa/nwa-gis-laravel/issues)
-#### Front
-- ~~Set initial map zoom correctly~~
-#### Dashboard
-- ~~Build a CRUD dashboard~~
-#### Misc
-- ~~Move this To-Do list somewhere else (issues?)~~
 
