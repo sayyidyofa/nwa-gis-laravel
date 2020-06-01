@@ -8,8 +8,8 @@ Geographic Information System using Laravel Framework
 
 Login di https://nwagis.projects.lazydev.me/login dengan:
 
-username: admin@admin.com
-password: admin
+username: `admin@admin.com` dan 
+password: `admin`
 
 ### Reference
 1. Dataset: [ArcGIS](https://hub.arcgis.com/datasets/usfs::national-wilderness-areas)
