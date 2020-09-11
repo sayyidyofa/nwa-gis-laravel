@@ -4,15 +4,6 @@
 
 Geographic Information System using Laravel Framework
 
-### Demo untuk tugas UTS
-
-Login di https://nwagis.projects.lazydev.me/login dengan:
-
-username: `admin@admin.com` dan 
-password: `admin`
-
-Dokumentasi: download [docx](https://github.com/sayyidyofa/nwa-gis-laravel/raw/master/PBD_Kelompok05.docx)
-
 ### Reference
 1. Dataset: [ArcGIS](https://hub.arcgis.com/datasets/usfs::national-wilderness-areas)
 2. CartoDB Site: [CartoDB](https://sayyidyofa.carto.com/builder/85da0184-1639-4f01-9f17-b268bac6da20/embed)
