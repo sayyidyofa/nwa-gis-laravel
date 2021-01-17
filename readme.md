@@ -4,6 +4,8 @@
 
 Geographic Information System using Laravel Framework
 
+This project is made for midterm college assignment, Database Programming course.
+
 ### Reference
 1. Dataset: [ArcGIS](https://hub.arcgis.com/datasets/usfs::national-wilderness-areas)
 2. CartoDB Site: [CartoDB](https://sayyidyofa.carto.com/builder/85da0184-1639-4f01-9f17-b268bac6da20/embed)
